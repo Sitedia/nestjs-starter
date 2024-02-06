@@ -6,7 +6,7 @@ ENV NEXT_TELEMETRY_DISABLED 1
 
 WORKDIR /build
 
-RUN npm install -g @nestjs/cli
+RUN npm install -g @nestjs/cli --ignore-scripts
 
 COPY nx.json package.json tsconfig.base.json yarn.lock ./
 COPY libs/health/package.json libs/health/project.json libs/health/tsconfig.json ./libs/health/
@@ -16,9 +16,9 @@ COPY libs/logger/src ./libs/logger/src
 COPY apps/backend/package.json apps/backend/nest-cli.json apps/backend/project.json apps/backend/tsconfig.json ./apps/backend/
 COPY apps/backend/src ./apps/backend/src
 
-RUN yarn install --frozen-lockfile
+RUN yarn install --frozen-lockfile --ignore-scripts
 RUN npx nx build apps/backend
-RUN yarn --production --frozen-lockfile
+RUN yarn --production --frozen-lockfile --ignore-scripts
 
 # TARGET
 
