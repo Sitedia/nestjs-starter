@@ -34,11 +34,6 @@ export class ApplicationLogger extends ConsoleLogger {
     return super.formatContext(context.padEnd(contextLength, ' ').slice(0, contextLength));
   }
 
-  protected formatCorrelationId(correlationId: string): string {
-    const contextLength = 8;
-    return super.formatContext((correlationId ?? '').padEnd(contextLength, ' ').slice(0, contextLength));
-  }
-
   formatMessage(logLevel: LogLevel, message: unknown, pidMessage: string, formattedLogLevel: string, contextMessage: string, timestampDiff: string): string {
     const output = this.stringifyMessage(message, logLevel);
     const level = this.colorize(formattedLogLevel, logLevel);
