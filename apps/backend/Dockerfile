@@ -6,7 +6,7 @@ ENV NEXT_TELEMETRY_DISABLED 1
 
 WORKDIR /build
 
-RUN npm install -g @nestjs/cli --ignore-scripts
+RUN npm install -g --ignore-scripts @nestjs/cli
 
 COPY nx.json package.json tsconfig.base.json yarn.lock ./
 COPY libs/health/package.json libs/health/project.json libs/health/tsconfig.json ./libs/health/
