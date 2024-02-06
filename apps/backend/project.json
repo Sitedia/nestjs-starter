@@ -87,7 +87,10 @@
     "docker:start": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["docker run --env-file apps/backend/.env.docker --name backend -p 443:443 backend"]
+        "commands": [
+          "echo 'Delete the previous container if exists ..' && docker rm -f backend && echo 'Create the container ...' && docker run --env-file apps/backend/.env.docker --name backend -p 3000:3000 backend"
+        ],
+        "parallel": false
       }
     }
   }

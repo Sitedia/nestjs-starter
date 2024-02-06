@@ -61,7 +61,8 @@ export const bootstrap = async (listen: boolean) => {
 
   // Log the entrypoint
   const logger = application.get(ApplicationLogger);
-  logger.log(`Application is listening on ${enableHTTPs ? 'https' : 'http'}://localhost:${applicationConfiguration.port}/`, 'Main');
+  const listeningUrl = `${enableHTTPs ? 'https' : 'http'}://localhost:${applicationConfiguration.port}/${applicationConfiguration.basePath}/`;
+  logger.log(`>>> Application is listening on ${listeningUrl}`, 'Main');
 
   return application;
 };
