@@ -1,0 +1,94 @@
+{
+  "name": "apps/backend",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "targets": {
+    "clear": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["rimraf dist coverage"],
+        "cwd": "apps/backend"
+      }
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["prettier --write \"src/**/*.ts\""],
+        "cwd": "apps/backend"
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["eslint \"src/**/*.ts\" --fix"],
+        "cwd": "apps/backend"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["nest build"],
+        "cwd": "apps/backend"
+      }
+    },
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["nest start --watch"],
+        "cwd": "apps/backend",
+        "envFile": "apps/backend/.env.dev"
+      }
+    },
+    "start": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["nest start"],
+        "cwd": "apps/backend"
+      },
+      "dependsOn": ["build"]
+    },
+    "start:prod": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["node dist/apps/backend/src/main.js"],
+        "cwd": "apps/backend"
+      },
+      "dependsOn": ["build"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "apps/backend/jest.config.js"
+      },
+      "dependsOn": ["clear"]
+    },
+    "test:watch": {
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "apps/backend/jest.config.js",
+        "watch": true
+      }
+    },
+    "test:coverage": {
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "apps/backend/jest.config.js",
+        "codeCoverage": true,
+        "runInBand": true
+      },
+      "dependsOn": ["clear"]
+    },
+    "docker:build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["DOCKER_BUILDKIT=1 docker build . -f apps/backend/Dockerfile -t backend --no-cache"]
+      }
+    },
+    "docker:start": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["docker run --env-file apps/backend/.env.docker --name backend -p 443:443 backend"]
+      }
+    }
+  }
+}

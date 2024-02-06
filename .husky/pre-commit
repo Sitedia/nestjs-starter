@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo
+echo "Step 1: Formatting code..."
+nx format --all --uncommitted
+
+echo
+echo "Step 2: Check code quality..."
+nx run-many --targets lint --parallel 20

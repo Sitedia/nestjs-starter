@@ -1,0 +1,48 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit",
+    "source.fixAll": "explicit"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[dockerfile]": {
+    "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+  },
+  "typescript.preferences.importModuleSpecifier": "project-relative",
+  "vsicons.associations.files": [
+    {
+      "icon": "jest",
+      "extensions": ["jest.base.js"],
+      "filename": true,
+      "format": "svg"
+    },
+    {
+      "icon": "eslint",
+      "extensions": [".eslintrc.base.js"],
+      "filename": true,
+      "format": "svg"
+    },
+    {
+      "icon": "nx",
+      "extensions": ["project.json"],
+      "filename": true,
+      "format": "svg"
+    },
+    {
+      "icon": "vscode",
+      "extensions": ["extensions.json", "settings.json"],
+      "filename": true,
+      "format": "svg"
+    }
+  ],
+  "eslint.workingDirectories": ["apps/backend", "libs/health", "libs/logger"],
+  "jest.jestCommandLine": "nx run-many --target test",
+  "jest.autoRevealOutput": "off",
+  "jest.autoRun": "off"
+}

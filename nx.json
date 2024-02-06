@@ -1,0 +1,17 @@
+{
+  "targetDefaults": {
+    "*": {
+      "cache": false
+    },
+    "build": {
+      "dependsOn": ["clear", "^clear", "^build"],
+      "inputs": ["production", "^production"]
+    }
+  },
+  "neverConnectToCloud": true,
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "sharedGlobals": [],
+    "production": ["default"]
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "name": "libs/logger",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "targets": {
+    "clear": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["rimraf dist coverage"],
+        "cwd": "libs/logger"
+      }
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["prettier --write \"src/**/*.ts\""],
+        "cwd": "libs/logger"
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["eslint \"src/**/*.ts\" --fix"],
+        "cwd": "libs/logger"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["nest build"],
+        "cwd": "libs/logger"
+      }
+    },
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["nest start --watch"],
+        "cwd": "libs/logger",
+        "envFile": "libs/logger/.env.dev"
+      }
+    },
+    "start": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["nest start"],
+        "cwd": "libs/logger"
+      },
+      "dependsOn": ["build"]
+    },
+    "start:prod": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["node dist/libs/logger/src/main.js"],
+        "cwd": "libs/logger"
+      },
+      "dependsOn": ["build"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "libs/logger/jest.config.js",
+        "verbose": true
+      },
+      "dependsOn": ["clear"]
+    },
+    "test:watch": {
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "libs/logger/jest.config.js",
+        "watch": true
+      }
+    },
+    "test:coverage": {
+      "executor": "@nx/jest:jest",
+      "options": {
+        "codeCoverage": true,
+        "jestConfig": "libs/logger/jest.config.js"
+      },
+      "dependsOn": ["clear"]
+    }
+  }
+}
