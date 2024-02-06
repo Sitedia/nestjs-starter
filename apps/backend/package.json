@@ -20,8 +20,6 @@
   "devDependencies": {
     "@nestjs/testing": "^10.3.1",
     "@types/supertest": "^6.0.2",
-    "dotenv": "^16.4.1",
-    "supertest": "^6.3.4",
-    "ts-jest": "^29.1.2"
+    "supertest": "^6.3.4"
   }
 }
