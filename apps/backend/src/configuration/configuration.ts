@@ -1,12 +1,14 @@
 import { LogLevel } from '@nestjs/common';
 import { Configuration } from './configuration.interface';
 
-const configuration = (): Configuration => ({
+const DEFAULT_PORT = 3000;
+
+export const configuration = (): Configuration => ({
   application: {
     name: process.env.APP_NAME,
     description: process.env.APP_DESCRIPTION,
     version: process.env.APP_VERSION,
-    port: process.env.PORT ? Number.parseInt(process.env.PORT) : 3000,
+    port: process.env.PORT ? Number.parseInt(process.env.PORT) : DEFAULT_PORT,
     origin: process.env.APP_CORS_ORIGIN,
     basePath: process.env.APP_BASE_PATH,
     swaggerUIEnabled: process.env.APP_SWAGGER_UI_ENABLED === 'true',
@@ -15,5 +17,3 @@ const configuration = (): Configuration => ({
     logCorrelationIdField: 'correlationId',
   },
 });
-
-export default configuration;

@@ -1,7 +1,7 @@
 import { LoggerModule } from '@company/logger';
 import { Test, TestingModule } from '@nestjs/testing';
 import { HealthModule } from '../health.module';
-import HealthController from './health.controller';
+import { HealthController } from './health.controller';
 
 const setup = async () => {
   const app: TestingModule = await Test.createTestingModule({

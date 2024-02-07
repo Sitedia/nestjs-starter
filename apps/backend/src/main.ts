@@ -1,4 +1,4 @@
-import { ApplicationLogger } from '@company/logger';
+import { ApplicationLogger, LogFormat } from '@company/logger';
 import { INestApplication, LogLevel } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
@@ -6,6 +6,9 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
 import { ApplicationConfiguration } from './configuration/configuration.interface';
+
+const LOG_FORMAT: LogFormat = process.env.APP_LOG_FORMAT === 'JSON' ? 'JSON' : 'CONSOLE';
+const LOG_LEVELS: LogLevel[] = process.env.APP_LOG_LEVELS?.split(',').map((format) => format.trim() as LogLevel);
 
 const configureSwagger = (application: INestApplication, applicationConfiguration: ApplicationConfiguration) => {
   // Check if Swagger UI should enabled
@@ -33,14 +36,10 @@ export const bootstrap = async (listen: boolean) => {
     key: process.env['APP_TLS_KEY']?.replaceAll('\\n', '\n'),
   };
 
-  // Load logs format
-  const logFormat = process.env.APP_LOG_FORMAT === 'JSON' ? 'JSON' : 'CONSOLE';
-  const logLevels = process.env.APP_LOG_LEVELS?.split(',').map((format) => format.trim() as LogLevel);
-
   // Init the application
   const application = await NestFactory.create(AppModule, {
     httpsOptions: enableHTTPs ? httpsOptions : undefined,
-    logger: new ApplicationLogger({ logFormat, logLevels }),
+    logger: new ApplicationLogger({ logFormat: LOG_FORMAT, logLevels: LOG_LEVELS }),
   });
 
   // Load the configuration

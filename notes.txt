@@ -1,0 +1,2 @@
+externaliser les rulesets
+pousser les fichiers .env sur le repository

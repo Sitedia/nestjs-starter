@@ -5,7 +5,7 @@ import { HealthCheck, HealthCheckService } from '@nestjs/terminus';
 
 @ApiTags('health')
 @Controller('health')
-class HealthController {
+export class HealthController {
   constructor(
     private health: HealthCheckService,
     private readonly logger: ApplicationLogger,
@@ -19,5 +19,3 @@ class HealthController {
     return healthCheckResult;
   }
 }
-
-export default HealthController;
