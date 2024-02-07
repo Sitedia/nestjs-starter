@@ -1,2 +1,3 @@
 externaliser les rulesets
 pousser les fichiers .env sur le repository
+mettre un eol à la fin de tous les fichiers
