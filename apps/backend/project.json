@@ -29,7 +29,8 @@
       "options": {
         "commands": ["nest build"],
         "cwd": "apps/backend"
-      }
+      },
+      "dependsOn": [{ "projects": ["libs/health", "libs/logger"], "target": "build" }]
     },
     "serve": {
       "executor": "nx:run-commands",
@@ -67,7 +68,8 @@
       "options": {
         "jestConfig": "apps/backend/jest.config.js",
         "watch": true
-      }
+      },
+      "dependsOn": ["clear"]
     },
     "test:coverage": {
       "executor": "@nx/jest:jest",
