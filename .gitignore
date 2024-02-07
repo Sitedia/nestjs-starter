@@ -5,5 +5,3 @@ coverage
 .nx/cache
 package-lock.json
 .husky/_
-.env.
-.env.*
