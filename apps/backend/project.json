@@ -30,7 +30,9 @@
         "commands": ["nest build"],
         "cwd": "apps/backend"
       },
-      "dependsOn": [{ "projects": ["libs/health", "libs/logger"], "target": "build" }]
+      "dependsOn": [
+        { "projects": ["libs/health", "libs/logger"], "target": "build" }
+      ]
     },
     "serve": {
       "executor": "nx:run-commands",
@@ -83,7 +85,9 @@
     "docker:build": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["DOCKER_BUILDKIT=1 docker build . -f apps/backend/Dockerfile -t backend --no-cache"]
+        "commands": [
+          "DOCKER_BUILDKIT=1 docker build . -f apps/backend/Dockerfile -t backend --no-cache"
+        ]
       }
     },
     "docker:start": {

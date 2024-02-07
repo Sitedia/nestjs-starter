@@ -7,10 +7,16 @@ import helmet from 'helmet';
 import { AppModule } from './app.module';
 import { ApplicationConfiguration } from './configuration/configuration.interface';
 
-const LOG_FORMAT: LogFormat = process.env.APP_LOG_FORMAT === 'JSON' ? 'JSON' : 'CONSOLE';
-const LOG_LEVELS: LogLevel[] = process.env.APP_LOG_LEVELS?.split(',').map((format) => format.trim() as LogLevel);
+const LOG_FORMAT: LogFormat =
+  process.env.APP_LOG_FORMAT === 'JSON' ? 'JSON' : 'CONSOLE';
+const LOG_LEVELS: LogLevel[] = process.env.APP_LOG_LEVELS?.split(',').map(
+  (format) => format.trim() as LogLevel,
+);
 
-const configureSwagger = (application: INestApplication, applicationConfiguration: ApplicationConfiguration) => {
+const configureSwagger = (
+  application: INestApplication,
+  applicationConfiguration: ApplicationConfiguration,
+) => {
   // Check if Swagger UI should enabled
   if (!applicationConfiguration.swaggerUIEnabled) {
     return;
@@ -23,7 +29,12 @@ const configureSwagger = (application: INestApplication, applicationConfiguratio
     .build();
 
   const document = SwaggerModule.createDocument(application, config);
-  SwaggerModule.setup(applicationConfiguration.basePath, application, document, { jsonDocumentUrl: '/api/openapi-docs' });
+  SwaggerModule.setup(
+    applicationConfiguration.basePath,
+    application,
+    document,
+    { jsonDocumentUrl: '/api/openapi-docs' },
+  );
 
   return this;
 };
@@ -39,12 +50,16 @@ export const bootstrap = async (listen: boolean) => {
   // Init the application
   const application = await NestFactory.create(AppModule, {
     httpsOptions: enableHTTPs ? httpsOptions : undefined,
-    logger: new ApplicationLogger({ logFormat: LOG_FORMAT, logLevels: LOG_LEVELS }),
+    logger: new ApplicationLogger({
+      logFormat: LOG_FORMAT,
+      logLevels: LOG_LEVELS,
+    }),
   });
 
   // Load the configuration
   const configService = application.get(ConfigService);
-  const applicationConfiguration = configService.get<ApplicationConfiguration>('application');
+  const applicationConfiguration =
+    configService.get<ApplicationConfiguration>('application');
 
   // Configure the entry point
   application.setGlobalPrefix(applicationConfiguration.basePath);
@@ -56,7 +71,9 @@ export const bootstrap = async (listen: boolean) => {
   configureSwagger(application, applicationConfiguration);
 
   // Start the application
-  await (listen ? application.listen(applicationConfiguration.port) : application.init());
+  await (listen
+    ? application.listen(applicationConfiguration.port)
+    : application.init());
 
   // Log the entrypoint
   const logger = application.get(ApplicationLogger);

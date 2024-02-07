@@ -15,7 +15,10 @@ export class HealthController {
   @HealthCheck()
   async check() {
     const healthCheckResult = await this.health.check([]);
-    this.logger.debug(`Status is ${healthCheckResult.status}`, HealthController.name);
+    this.logger.debug(
+      `Status is ${healthCheckResult.status}`,
+      HealthController.name,
+    );
     return healthCheckResult;
   }
 }

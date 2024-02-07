@@ -3,7 +3,10 @@ import { Observable } from 'rxjs';
 import { RequestInterceptor } from './request.interceptor';
 
 const setup = async () => {
-  const logger = new ApplicationLogger({ logLevels: ['fatal', 'error'], logFormat: 'CONSOLE' });
+  const logger = new ApplicationLogger({
+    logLevels: ['fatal', 'error'],
+    logFormat: 'CONSOLE',
+  });
 
   // Add a spy on the request interceptor
   const requestInterceptor = new RequestInterceptor(logger);
@@ -20,7 +23,9 @@ describe('log incoming requests', () => {
     // Mock the context
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const contextMock: any = {
-      switchToHttp: () => ({ getRequest: () => ({ url: 'http://localhost/my-query' }) }),
+      switchToHttp: () => ({
+        getRequest: () => ({ url: 'http://localhost/my-query' }),
+      }),
     };
 
     // Mock the handler

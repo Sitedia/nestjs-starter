@@ -10,7 +10,6 @@ module.exports = {
     complexity: ['error', 8],
     'max-depth': ['error', 4],
     'no-console': 'warn',
-    'max-lines-per-function': ['error', 50],
     'max-statements': ['error', 15],
     'max-statements-per-line': ['error', { max: 2 }],
     'max-params': ['error', 8],
@@ -24,6 +23,7 @@ module.exports = {
       files: ['**/*.test.ts', '**/*.e2e-test.ts'],
       rules: {
         'no-magic-numbers': 'off',
+        'max-lines-per-function': 'off',
       },
     },
   ],

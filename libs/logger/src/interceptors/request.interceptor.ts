@@ -1,4 +1,9 @@
-import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common';
+import {
+  CallHandler,
+  ExecutionContext,
+  Injectable,
+  NestInterceptor,
+} from '@nestjs/common';
 import { IncomingMessage } from 'node:http';
 import { ApplicationLogger } from '../loggers/application.logger';
 
@@ -8,7 +13,10 @@ export class RequestInterceptor implements NestInterceptor {
 
   intercept(context: ExecutionContext, next: CallHandler) {
     const request: IncomingMessage = context.switchToHttp().getRequest();
-    this.logger.log(`${request.method} ${request.url}`, RequestInterceptor.name);
+    this.logger.log(
+      `${request.method} ${request.url}`,
+      RequestInterceptor.name,
+    );
     return next.handle();
   }
 }

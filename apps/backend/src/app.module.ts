@@ -14,7 +14,8 @@ import { ApplicationConfiguration } from './configuration/configuration.interfac
     HealthModule,
     LoggerModule.registerAsync({
       useFactory: (configService: ConfigService) => {
-        const applicationConfiguration: ApplicationConfiguration = configService.get('application')!;
+        const applicationConfiguration: ApplicationConfiguration =
+          configService.get('application')!;
         return {
           logLevels: applicationConfiguration.logLevels,
           logFormat: applicationConfiguration.logFormat,
