@@ -31,7 +31,10 @@
         "cwd": "apps/backend"
       },
       "dependsOn": [
-        { "projects": ["libs/health", "libs/logger"], "target": "build" }
+        {
+          "projects": ["libs/health", "libs/logger"],
+          "target": "build"
+        }
       ]
     },
     "serve": {

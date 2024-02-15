@@ -49,7 +49,7 @@ export class ApplicationLogger extends ConsoleLogger {
   ): string {
     const output = this.stringifyMessage(message, logLevel);
     const level = this.colorize(formattedLogLevel, logLevel);
-    const timestamp = new Date(this.getTimestamp()).toISOString();
+    const timestamp = new Date().toISOString();
     if (this.logFormat === 'JSON') {
       return `${JSON.stringify({
         pid: pidMessage,
