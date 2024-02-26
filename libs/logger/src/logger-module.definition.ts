@@ -9,4 +9,4 @@ export interface LoggerModuleOptions {
 export const { ConfigurableModuleClass, MODULE_OPTIONS_TOKEN } =
   new ConfigurableModuleBuilder<LoggerModuleOptions>()
     .setExtras({ global: true })
-    .build();
+    .build() as { ConfigurableModuleClass; MODULE_OPTIONS_TOKEN };

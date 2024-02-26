@@ -5,13 +5,15 @@ import {
   NestInterceptor,
 } from '@nestjs/common';
 import { IncomingMessage } from 'node:http';
+import { Observable } from 'rxjs';
 import { ApplicationLogger } from '../loggers/application.logger';
 
 @Injectable()
 export class RequestInterceptor implements NestInterceptor {
   constructor(private readonly logger: ApplicationLogger) {}
 
-  intercept(context: ExecutionContext, next: CallHandler) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const request: IncomingMessage = context.switchToHttp().getRequest();
     this.logger.log(
       `${request.method} ${request.url}`,
