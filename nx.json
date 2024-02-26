@@ -8,7 +8,7 @@
       "cache": false
     },
     "build": {
-      "dependsOn": ["clear", "^clear", "^build"],
+      "dependsOn": ["clear", "^build"],
       "inputs": ["production", "^production"]
     }
   },

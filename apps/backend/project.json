@@ -6,7 +6,7 @@
     "clear": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["rimraf node_modules dist coverage"],
+        "commands": ["rimraf dist coverage"],
         "cwd": "apps/backend"
       }
     },
@@ -31,6 +31,7 @@
         "cwd": "apps/backend"
       },
       "dependsOn": [
+        "clear",
         {
           "projects": ["libs/health", "libs/logger"],
           "target": "build"

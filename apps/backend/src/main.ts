@@ -7,12 +7,6 @@ import helmet from 'helmet';
 import { AppModule } from './app.module';
 import { ApplicationConfiguration } from './configuration/configuration.interface';
 
-const LOG_FORMAT: LogFormat =
-  process.env.APP_LOG_FORMAT === 'JSON' ? 'JSON' : 'CONSOLE';
-const LOG_LEVELS: LogLevel[] = process.env.APP_LOG_LEVELS?.split(',').map(
-  (format) => format.trim() as LogLevel,
-);
-
 const configureSwagger = (
   application: INestApplication,
   applicationConfiguration: ApplicationConfiguration,
@@ -39,7 +33,25 @@ const configureSwagger = (
   return this;
 };
 
+const secureEntrypoint = (
+  application: INestApplication,
+  applicationConfiguration: ApplicationConfiguration,
+) => {
+  application.setGlobalPrefix(applicationConfiguration.basePath);
+  application.use(helmet());
+  application.enableCors({ origin: applicationConfiguration.origin });
+  application.enableVersioning();
+
+  return this;
+};
+
 export const bootstrap = async (listen: boolean) => {
+  const LOG_FORMAT: LogFormat =
+    process.env.APP_LOG_FORMAT === 'JSON' ? 'JSON' : 'CONSOLE';
+  const LOG_LEVELS: LogLevel[] = process.env.APP_LOG_LEVELS?.split(',').map(
+    (format) => format.trim() as LogLevel,
+  );
+
   // Configure HTTPs
   const enableHTTPs = process.env['APP_TLS_ENABLED'] === 'true';
   const httpsOptions = {
@@ -62,10 +74,7 @@ export const bootstrap = async (listen: boolean) => {
     configService.get<ApplicationConfiguration>('application');
 
   // Configure the entry point
-  application.setGlobalPrefix(applicationConfiguration.basePath);
-  application.use(helmet());
-  application.enableCors({ origin: applicationConfiguration.origin });
-  application.enableVersioning();
+  secureEntrypoint(application, applicationConfiguration);
 
   // Configure Swagger
   configureSwagger(application, applicationConfiguration);

@@ -6,7 +6,7 @@
     "clear": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["rimraf node_modules dist coverage"],
+        "commands": ["rimraf dist coverage"],
         "cwd": "libs/logger"
       }
     },

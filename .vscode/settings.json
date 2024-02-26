@@ -42,7 +42,5 @@
     }
   ],
   "eslint.workingDirectories": ["apps/backend", "libs/health", "libs/logger"],
-  "jest.jestCommandLine": "nx run-many --target test",
-  "jest.autoRevealOutput": "off",
-  "jest.autoRun": "off"
+  "jest.jestCommandLine": "nx run-many --target test"
 }
