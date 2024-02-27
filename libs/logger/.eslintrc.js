@@ -1,5 +1,5 @@
 module.exports = {
-  extends: '../../.eslintrc.base.js',
+  extends: '../../.eslintrc.js',
   overrides: [
     {
       files: ['*.ts'],

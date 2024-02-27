@@ -23,12 +23,6 @@
       "format": "svg"
     },
     {
-      "icon": "eslint",
-      "extensions": [".eslintrc.base.js"],
-      "filename": true,
-      "format": "svg"
-    },
-    {
       "icon": "nx",
       "extensions": ["project.json"],
       "filename": true,
