@@ -27,7 +27,7 @@
     "lint": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["eslint \"src/**/*.ts\" --fix"],
+        "commands": ["eslint --fix"],
         "cwd": "apps/backend"
       }
     },

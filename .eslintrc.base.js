@@ -15,6 +15,7 @@ module.exports = {
     camelcase: 'error',
     complexity: ['error', 8],
     '@stylistic/linebreak-style': ['error', 'windows'],
+    'eol-last': ['error', 'always'],
     'max-depth': ['error', 4],
     'no-console': 'warn',
     'max-statements': ['error', 15],
@@ -38,4 +39,3 @@ module.exports = {
     },
   ],
 };
-
