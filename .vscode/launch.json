@@ -5,13 +5,15 @@
       "name": "Launch application",
       "command": "nx serve apps/backend",
       "request": "launch",
-      "type": "node-terminal"
+      "type": "node-terminal",
+      "sourceMaps": true
     },
     {
       "name": "Launch tests",
       "command": "nx test:watch apps/backend",
       "request": "launch",
-      "type": "node-terminal"
+      "type": "node-terminal",
+      "sourceMaps": true
     }
   ]
 }
