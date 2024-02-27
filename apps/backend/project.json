@@ -10,6 +10,13 @@
         "cwd": "apps/backend"
       }
     },
+    "clear:all": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["rimraf dist coverage node_modules"],
+        "cwd": "apps/backend"
+      }
+    },
     "format": {
       "executor": "nx:run-commands",
       "options": {

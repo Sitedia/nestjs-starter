@@ -42,5 +42,8 @@
     }
   ],
   "eslint.workingDirectories": ["apps/backend", "libs/health", "libs/logger"],
-  "jest.jestCommandLine": "nx run-many --target test"
+  "jest.jestCommandLine": "nx run-many --target test",
+  "jest.outputConfig": "test-results-based",
+  "jest.runMode": "on-demand",
+  "testing.openTesting": "neverOpen"
 }

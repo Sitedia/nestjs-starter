@@ -10,6 +10,13 @@
         "cwd": "libs/health"
       }
     },
+    "clear:all": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["rimraf dist coverage node_modules"],
+        "cwd": "libs/health"
+      }
+    },
     "format": {
       "executor": "nx:run-commands",
       "options": {
