@@ -1,6 +1,7 @@
 module.exports = {
   root: true,
   extends: ['eslint:recommended', 'plugin:jest/all', 'plugin:unicorn/all'],
+  plugins: ['@stylistic'],
   ignorePatterns: [
     '.eslintrc.js',
     'prettier.config.js',
@@ -13,6 +14,7 @@ module.exports = {
     eqeqeq: 'error',
     camelcase: 'error',
     complexity: ['error', 8],
+    '@stylistic/linebreak-style': ['error', 'windows'],
     'max-depth': ['error', 4],
     'no-console': 'warn',
     'max-statements': ['error', 15],
@@ -36,3 +38,4 @@ module.exports = {
     },
   ],
 };
+
