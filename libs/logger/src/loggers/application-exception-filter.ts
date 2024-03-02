@@ -1,10 +1,4 @@
-import {
-  ArgumentsHost,
-  Catch,
-  ExceptionFilter,
-  HttpException,
-  HttpStatus,
-} from '@nestjs/common';
+import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { ApplicationLogger } from './application.logger';
 
@@ -20,16 +14,9 @@ export class ApplicationExceptionFilter implements ExceptionFilter {
 
     // Log server NestJS errors
     if (status >= HttpStatus.INTERNAL_SERVER_ERROR) {
-      this.logger.error(
-        exception.message,
-        exception.stack,
-        ApplicationExceptionFilter.name,
-      );
+      this.logger.error(exception.message, exception.stack, ApplicationExceptionFilter.name);
     } else {
-      this.logger.warn(
-        `${exception.constructor.name}: ${exception.message}`,
-        ApplicationExceptionFilter.name,
-      );
+      this.logger.warn(`${exception.constructor.name}: ${exception.message}`, ApplicationExceptionFilter.name);
     }
 
     response.status(status).json({
@@ -40,4 +27,3 @@ export class ApplicationExceptionFilter implements ExceptionFilter {
     });
   }
 }
-

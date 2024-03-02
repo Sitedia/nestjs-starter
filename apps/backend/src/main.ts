@@ -7,10 +7,7 @@ import helmet from 'helmet';
 import { AppModule } from './app.module';
 import { ApplicationConfiguration } from './configuration/configuration.interface';
 
-const configureSwagger = (
-  application: INestApplication,
-  applicationConfiguration: ApplicationConfiguration,
-) => {
+const configureSwagger = (application: INestApplication, applicationConfiguration: ApplicationConfiguration) => {
   // Check if Swagger UI should enabled
   if (!applicationConfiguration.swaggerUIEnabled) {
     return;
@@ -23,20 +20,14 @@ const configureSwagger = (
     .build();
 
   const document = SwaggerModule.createDocument(application, config);
-  SwaggerModule.setup(
-    applicationConfiguration.basePath,
-    application,
-    document,
-    { jsonDocumentUrl: '/api/openapi-docs' },
-  );
+  SwaggerModule.setup(applicationConfiguration.basePath, application, document, {
+    jsonDocumentUrl: '/api/openapi-docs',
+  });
 
   return this;
 };
 
-const secureEntrypoint = (
-  application: INestApplication,
-  applicationConfiguration: ApplicationConfiguration,
-) => {
+const secureEntrypoint = (application: INestApplication, applicationConfiguration: ApplicationConfiguration) => {
   application.setGlobalPrefix(applicationConfiguration.basePath);
   application.use(helmet());
   application.enableCors({ origin: applicationConfiguration.origin });
@@ -46,11 +37,8 @@ const secureEntrypoint = (
 };
 
 export const bootstrap = async (listen: boolean) => {
-  const LOG_FORMAT: LogFormat =
-    process.env.APP_LOG_FORMAT === 'JSON' ? 'JSON' : 'CONSOLE';
-  const LOG_LEVELS: LogLevel[] = process.env.APP_LOG_LEVELS?.split(',').map(
-    (format) => format.trim() as LogLevel,
-  );
+  const LOG_FORMAT: LogFormat = process.env.APP_LOG_FORMAT === 'JSON' ? 'JSON' : 'CONSOLE';
+  const LOG_LEVELS: LogLevel[] = process.env.APP_LOG_LEVELS?.split(',').map((format) => format.trim() as LogLevel);
 
   // Configure HTTPs
   const enableHTTPs = process.env['APP_TLS_ENABLED'] === 'true';
@@ -70,8 +58,7 @@ export const bootstrap = async (listen: boolean) => {
 
   // Load the configuration
   const configService = application.get(ConfigService);
-  const applicationConfiguration =
-    configService.get<ApplicationConfiguration>('application');
+  const applicationConfiguration = configService.get<ApplicationConfiguration>('application');
 
   // Configure the entry point
   secureEntrypoint(application, applicationConfiguration);
@@ -80,9 +67,7 @@ export const bootstrap = async (listen: boolean) => {
   configureSwagger(application, applicationConfiguration);
 
   // Start the application
-  await (listen
-    ? application.listen(applicationConfiguration.port)
-    : application.init());
+  await (listen ? application.listen(applicationConfiguration.port) : application.init());
 
   // Log the entrypoint
   const logger = application.get(ApplicationLogger);

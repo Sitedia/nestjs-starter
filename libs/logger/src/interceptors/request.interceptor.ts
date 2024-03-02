@@ -1,9 +1,4 @@
-import {
-  CallHandler,
-  ExecutionContext,
-  Injectable,
-  NestInterceptor,
-} from '@nestjs/common';
+import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common';
 import { IncomingMessage } from 'node:http';
 import { Observable } from 'rxjs';
 import { ApplicationLogger } from '../loggers/application.logger';
@@ -15,10 +10,7 @@ export class RequestInterceptor implements NestInterceptor {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const request: IncomingMessage = context.switchToHttp().getRequest();
-    this.logger.log(
-      `${request.method} ${request.url}`,
-      RequestInterceptor.name,
-    );
+    this.logger.log(`${request.method} ${request.url}`, RequestInterceptor.name);
     return next.handle();
   }
 }
