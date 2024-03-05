@@ -1,5 +1,8 @@
 import { ConsoleLogger, Inject, Injectable, LogLevel } from '@nestjs/common';
-import { LoggerModuleOptions, MODULE_OPTIONS_TOKEN } from '../logger-module.definition';
+import {
+  LoggerModuleOptions,
+  MODULE_OPTIONS_TOKEN,
+} from '../logger-module.definition';
 import { LogFormat } from '../models/log-format';
 
 @Injectable()
@@ -31,7 +34,9 @@ export class ApplicationLogger extends ConsoleLogger {
     if (this.logFormat === 'JSON') {
       return context;
     }
-    return super.formatContext(context.padEnd(contextLength, ' ').slice(0, contextLength));
+    return super.formatContext(
+      context.padEnd(contextLength, ' ').slice(0, contextLength),
+    );
   }
 
   formatMessage(

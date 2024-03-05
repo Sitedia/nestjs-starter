@@ -13,7 +13,9 @@ export const configuration = (): Configuration => ({
     basePath: process.env.APP_BASE_PATH,
     swaggerUIEnabled: process.env.APP_SWAGGER_UI_ENABLED === 'true',
     logFormat: process.env.APP_LOG_FORMAT === 'JSON' ? 'JSON' : 'CONSOLE',
-    logLevels: process.env.APP_LOG_LEVELS?.split(',').map((format) => format.trim() as LogLevel),
+    logLevels: process.env.APP_LOG_LEVELS?.split(',').map(
+      (format) => format.trim() as LogLevel,
+    ),
     logCorrelationIdField: 'correlationId',
   },
 });

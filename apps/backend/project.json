@@ -96,7 +96,9 @@
     "docker:build": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["DOCKER_BUILDKIT=1 docker build . -f apps/backend/Dockerfile -t backend --no-cache"]
+        "commands": [
+          "DOCKER_BUILDKIT=1 docker build . -f apps/backend/Dockerfile -t backend --no-cache"
+        ]
       }
     },
     "docker:start": {

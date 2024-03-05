@@ -6,9 +6,10 @@ export interface LoggerModuleOptions {
   logFormat?: LogFormat;
 }
 
-export const { ConfigurableModuleClass, MODULE_OPTIONS_TOKEN } = new ConfigurableModuleBuilder<LoggerModuleOptions>()
-  .setExtras({ global: true })
-  .build() as {
-  ConfigurableModuleClass;
-  MODULE_OPTIONS_TOKEN;
-};
+export const { ConfigurableModuleClass, MODULE_OPTIONS_TOKEN } =
+  new ConfigurableModuleBuilder<LoggerModuleOptions>()
+    .setExtras({ global: true })
+    .build() as {
+    ConfigurableModuleClass;
+    MODULE_OPTIONS_TOKEN;
+  };
