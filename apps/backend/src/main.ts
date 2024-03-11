@@ -10,16 +10,21 @@ import { ApplicationConfiguration } from './configuration/configuration.interfac
 const configureSwagger = (
   application: INestApplication,
   applicationConfiguration: ApplicationConfiguration,
+  applicationUrl: string,
 ) => {
   // Check if Swagger UI should enabled
   if (!applicationConfiguration.swaggerUIEnabled) {
     return;
   }
 
+  // Get the API url
+
   const config = new DocumentBuilder()
     .setTitle(applicationConfiguration.name)
     .setDescription(applicationConfiguration.description)
     .setVersion(applicationConfiguration.version)
+    .addTag('health')
+    .addServer(applicationUrl)
     .build();
 
   const document = SwaggerModule.createDocument(application, config);
@@ -79,7 +84,8 @@ export const bootstrap = async (listen: boolean) => {
   secureEntrypoint(application, applicationConfiguration);
 
   // Configure Swagger
-  configureSwagger(application, applicationConfiguration);
+  const applicationUrl = `${enableHTTPs ? 'https' : 'http'}://localhost:${applicationConfiguration.port}`;
+  configureSwagger(application, applicationConfiguration, applicationUrl);
 
   // Start the application
   await (listen
@@ -88,8 +94,10 @@ export const bootstrap = async (listen: boolean) => {
 
   // Log the entrypoint
   const logger = application.get(ApplicationLogger);
-  const listeningUrl = `${enableHTTPs ? 'https' : 'http'}://localhost:${applicationConfiguration.port}/${applicationConfiguration.basePath}/`;
-  logger.log(`>>> Application is listening on ${listeningUrl}`, 'Main');
+  logger.log(
+    `>>> Application is listening on ${applicationUrl}/${applicationConfiguration.basePath}`,
+    'Main',
+  );
 
   return application;
 };
