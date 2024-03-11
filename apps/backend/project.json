@@ -6,7 +6,7 @@
     "clear": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["rimraf dist coverage"],
+        "commands": ["rimraf dist coverage openapi.json"],
         "cwd": "apps/backend"
       }
     },
@@ -29,6 +29,18 @@
       "options": {
         "commands": ["eslint --fix"],
         "cwd": "apps/backend"
+      }
+    },
+    "lint:api": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "nest start",
+          "spectral lint ./openapi.json --ruleset ../../spectral.yml"
+        ],
+        "cwd": "apps/backend",
+        "envFile": "apps/backend/.env.swagger",
+        "parallel": false
       }
     },
     "build": {

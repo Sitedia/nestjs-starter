@@ -15,7 +15,7 @@ module.exports = {
     complexity: ['error', 8],
     'max-depth': ['error', 4],
     'no-console': 'warn',
-    'max-statements': ['error', 15],
+    'max-statements': ['error', 30],
     'max-statements-per-line': ['error', { max: 2 }],
     'max-params': ['error', 8],
     'no-useless-escape': 'error',

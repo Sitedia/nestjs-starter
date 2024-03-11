@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
+import * as fs from 'node:fs';
 import { AppModule } from './app.module';
 import { ApplicationConfiguration } from './configuration/configuration.interface';
 
@@ -37,7 +38,7 @@ const configureSwagger = (
     },
   );
 
-  return this;
+  return document;
 };
 
 const secureEntrypoint = (
@@ -52,7 +53,7 @@ const secureEntrypoint = (
   return this;
 };
 
-export const bootstrap = async (listen: boolean) => {
+export const bootstrap = async (mode: 'LISTEN' | 'TEST' | 'SWAGGER') => {
   const LOG_FORMAT: LogFormat =
     process.env.APP_LOG_FORMAT === 'JSON' ? 'JSON' : 'CONSOLE';
   const LOG_LEVELS: LogLevel[] = process.env.APP_LOG_LEVELS?.split(',').map(
@@ -85,22 +86,35 @@ export const bootstrap = async (listen: boolean) => {
 
   // Configure Swagger
   const applicationUrl = `${enableHTTPs ? 'https' : 'http'}://localhost:${applicationConfiguration.port}`;
-  configureSwagger(application, applicationConfiguration, applicationUrl);
+  const document = configureSwagger(
+    application,
+    applicationConfiguration,
+    applicationUrl,
+  );
 
   // Start the application
-  await (listen
-    ? application.listen(applicationConfiguration.port)
-    : application.init());
-
-  // Log the entrypoint
-  const logger = application.get(ApplicationLogger);
-  logger.log(
-    `>>> Application is listening on ${applicationUrl}/${applicationConfiguration.basePath}`,
-    'Main',
-  );
+  switch (mode) {
+    case 'TEST': {
+      await application.init();
+      break;
+    }
+    case 'SWAGGER': {
+      await application.init();
+      fs.writeFileSync('openapi.json', JSON.stringify(document));
+      break;
+    }
+    default: {
+      application.listen(applicationConfiguration.port);
+      const logger = application.get(ApplicationLogger);
+      logger.log(
+        `>>> Application is listening on ${applicationUrl}/${applicationConfiguration.basePath}`,
+        'Main',
+      );
+    }
+  }
 
   return application;
 };
 
 // eslint-disable-next-line jest/require-hook
-bootstrap(true);
+bootstrap(process.env.APP_MODE as 'LISTEN' | 'TEST' | 'SWAGGER');

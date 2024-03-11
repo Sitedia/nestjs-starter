@@ -2,7 +2,7 @@ import * as request from 'supertest';
 import { bootstrap } from '../src/main';
 
 const setup = async () => {
-  return bootstrap(false);
+  return bootstrap('TEST');
 };
 
 describe('given the application is starting', () => {
