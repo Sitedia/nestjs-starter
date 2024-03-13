@@ -29,22 +29,14 @@ const configureSwagger = (
     .build();
 
   const document = SwaggerModule.createDocument(application, config);
-  SwaggerModule.setup(
-    applicationConfiguration.basePath,
-    application,
-    document,
-    {
-      jsonDocumentUrl: '/api/openapi-docs',
-    },
-  );
+  SwaggerModule.setup(applicationConfiguration.basePath, application, document, {
+    jsonDocumentUrl: '/api/openapi-docs',
+  });
 
   return document;
 };
 
-const secureEntrypoint = (
-  application: INestApplication,
-  applicationConfiguration: ApplicationConfiguration,
-) => {
+const secureEntrypoint = (application: INestApplication, applicationConfiguration: ApplicationConfiguration) => {
   application.setGlobalPrefix(applicationConfiguration.basePath);
   application.use(helmet());
   application.enableCors({ origin: applicationConfiguration.origin });
@@ -54,11 +46,8 @@ const secureEntrypoint = (
 };
 
 export const bootstrap = async (mode: 'LISTEN' | 'TEST' | 'SWAGGER') => {
-  const LOG_FORMAT: LogFormat =
-    process.env.APP_LOG_FORMAT === 'JSON' ? 'JSON' : 'CONSOLE';
-  const LOG_LEVELS: LogLevel[] = process.env.APP_LOG_LEVELS?.split(',').map(
-    (format) => format.trim() as LogLevel,
-  );
+  const LOG_FORMAT: LogFormat = process.env.APP_LOG_FORMAT === 'JSON' ? 'JSON' : 'CONSOLE';
+  const LOG_LEVELS: LogLevel[] = process.env.APP_LOG_LEVELS?.split(',').map((format) => format.trim() as LogLevel);
 
   // Configure HTTPs
   const enableHTTPs = process.env['APP_TLS_ENABLED'] === 'true';
@@ -78,19 +67,14 @@ export const bootstrap = async (mode: 'LISTEN' | 'TEST' | 'SWAGGER') => {
 
   // Load the configuration
   const configService = application.get(ConfigService);
-  const applicationConfiguration =
-    configService.get<ApplicationConfiguration>('application');
+  const applicationConfiguration = configService.get<ApplicationConfiguration>('application');
 
   // Configure the entry point
   secureEntrypoint(application, applicationConfiguration);
 
   // Configure Swagger
   const applicationUrl = `${enableHTTPs ? 'https' : 'http'}://localhost:${applicationConfiguration.port}`;
-  const document = configureSwagger(
-    application,
-    applicationConfiguration,
-    applicationUrl,
-  );
+  const document = configureSwagger(application, applicationConfiguration, applicationUrl);
 
   // Start the application
   switch (mode) {
@@ -106,10 +90,7 @@ export const bootstrap = async (mode: 'LISTEN' | 'TEST' | 'SWAGGER') => {
     default: {
       application.listen(applicationConfiguration.port);
       const logger = application.get(ApplicationLogger);
-      logger.log(
-        `>>> Application is listening on ${applicationUrl}/${applicationConfiguration.basePath}`,
-        'Main',
-      );
+      logger.log(`>>> Application is listening on ${applicationUrl}/${applicationConfiguration.basePath}`, 'Main');
     }
   }
 

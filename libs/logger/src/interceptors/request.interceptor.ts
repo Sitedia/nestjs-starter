@@ -1,11 +1,4 @@
-import {
-  CallHandler,
-  ExecutionContext,
-  HttpException,
-  HttpStatus,
-  Injectable,
-  NestInterceptor,
-} from '@nestjs/common';
+import { CallHandler, ExecutionContext, HttpException, HttpStatus, Injectable, NestInterceptor } from '@nestjs/common';
 import { IncomingMessage } from 'node:http';
 import { Observable, catchError, tap, throwError } from 'rxjs';
 import { ApplicationLogger } from '../loggers/application.logger';
@@ -28,17 +21,11 @@ export class RequestInterceptor implements NestInterceptor {
     return next.handle().pipe(
       tap(() => {
         const delay = Date.now() - now;
-        this.logger.debug(
-          `${clientRequest} | ${response.statusCode} | ${delay}ms`,
-          RequestInterceptor.name,
-        );
+        this.logger.debug(`${clientRequest} | ${response.statusCode} | ${delay}ms`, RequestInterceptor.name);
       }),
       catchError((error) => {
         const delay = Date.now() - now;
-        const status =
-          error instanceof HttpException
-            ? error.getStatus()
-            : HttpStatus.INTERNAL_SERVER_ERROR;
+        const status = error instanceof HttpException ? error.getStatus() : HttpStatus.INTERNAL_SERVER_ERROR;
         const message = `${clientRequest} | ${status} | ${delay}ms | ${error.message}`;
 
         // Log server NestJS errors
@@ -53,4 +40,3 @@ export class RequestInterceptor implements NestInterceptor {
     );
   }
 }
-

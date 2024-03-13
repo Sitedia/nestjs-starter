@@ -1,5 +1,5 @@
 import { ApplicationLogger } from '@company/logger';
-import { Controller, ForbiddenException, Get } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { HealthCheck, HealthCheckService } from '@nestjs/terminus';
 
@@ -18,14 +18,8 @@ export class HealthController {
   @Get()
   @HealthCheck()
   async check() {
-    if (1 === 1) {
-      throw new ForbiddenException('My error645');
-    }
     const healthCheckResult = await this.health.check([]);
-    this.logger.debug(
-      `Status is ${healthCheckResult.status}`,
-      HealthController.name,
-    );
+    this.logger.debug(`Status is ${healthCheckResult.status}`, HealthController.name);
     return healthCheckResult;
   }
 }

@@ -5,12 +5,7 @@ module.exports = {
   testRegex: ['.*\\.test\\.ts$', '.*\\.e2e-test\\.ts$'],
   transform: { '^.+\\.[tj]sx?$': ['ts-jest'] },
   moduleFileExtensions: ['js', 'json', 'ts'],
-  collectCoverageFrom: [
-    'src/**/*.ts',
-    '!src/**/*.test.ts',
-    '!src/**/*.e2e-test.ts',
-    '!src/index.ts',
-  ],
+  collectCoverageFrom: ['src/**/*.ts', '!src/**/*.test.ts', '!src/**/*.e2e-test.ts', '!src/index.ts'],
   coverageDirectory: './coverage',
   coverageThreshold: { global: { lines: 75 } },
   testEnvironment: 'node',
