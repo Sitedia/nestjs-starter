@@ -3,6 +3,8 @@ import { IncomingMessage } from 'node:http';
 import { Observable, catchError, tap, throwError } from 'rxjs';
 import { ApplicationLogger } from '../loggers/application.logger';
 
+const DELAY_WARNING_THRESHOLD = 1000;
+
 @Injectable()
 export class RequestInterceptor implements NestInterceptor {
   constructor(private readonly logger: ApplicationLogger) {}
@@ -21,7 +23,12 @@ export class RequestInterceptor implements NestInterceptor {
     return next.handle().pipe(
       tap(() => {
         const delay = Date.now() - now;
-        this.logger.debug(`${clientRequest} | ${response.statusCode} | ${delay}ms`, RequestInterceptor.name);
+        const message = `${clientRequest} | ${response.statusCode} | ${delay}ms`;
+        if (delay >= DELAY_WARNING_THRESHOLD) {
+          this.logger.warn(message, RequestInterceptor.name);
+        } else {
+          this.logger.verbose(message, RequestInterceptor.name);
+        }
       }),
       catchError((error) => {
         const delay = Date.now() - now;

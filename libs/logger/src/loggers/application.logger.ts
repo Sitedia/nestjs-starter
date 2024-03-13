@@ -54,6 +54,6 @@ export class ApplicationLogger extends ConsoleLogger {
         message: output,
       })}\n`;
     }
-    return `${this.colorize(this.getTimestamp(), logLevel)}${level} ${contextMessage}${output}${timestampDiff}\n`;
+    return `${this.colorize(this.getTimestamp(), logLevel)} ${level} ${contextMessage}${output}${timestampDiff}\n`;
   }
 }
