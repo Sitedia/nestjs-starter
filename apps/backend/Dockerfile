@@ -1,6 +1,5 @@
 # BUILD
-
-FROM registry.access.redhat.com/ubi9/nodejs-20 AS builder
+FROM registry.access.redhat.com/ubi9/nodejs-20:1-34 AS builder
 
 WORKDIR /build
 
@@ -19,7 +18,7 @@ RUN pnpm install --prod --force --frozen-lockfile
 
 # TARGET
 
-FROM registry.access.redhat.com/ubi9/nodejs-20-minimal AS production
+FROM registry.access.redhat.com/ubi9/nodejs-20-minimal:1-37 AS production
 
 ARG APP_VERSION
 

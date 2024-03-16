@@ -39,5 +39,10 @@
   "jest.jestCommandLine": "nx run-many --target test",
   "jest.outputConfig": "test-results-based",
   "jest.runMode": "on-demand",
-  "testing.openTesting": "neverOpen"
+  "testing.openTesting": "neverOpen",
+  "sonarlint.connectedMode.project": {
+    "connectionId": "sitedia",
+    "projectKey": "Sitedia_nestjs-starter"
+  },
+  "sonarlint.output.showAnalyzerLogs": true
 }
