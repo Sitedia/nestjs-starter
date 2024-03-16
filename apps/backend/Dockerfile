@@ -12,10 +12,10 @@ COPY --chown=1001 libs/logger/src ./libs/logger/src
 COPY --chown=1001 apps/backend/package.json apps/backend/nest-cli.json apps/backend/project.json apps/backend/tsconfig.json ./apps/backend/
 COPY --chown=1001 apps/backend/src ./apps/backend/src
 
-RUN npm install -g --ignore-scripts @nestjs/cli pnpm
-RUN pnpm install --frozen-lockfile --ignore-scripts
+RUN npm install -g @nestjs/cli pnpm
+RUN pnpm install --frozen-lockfile
 RUN npx nx build apps/backend
-RUN pnpm install --prod --force --frozen-lockfile --ignore-scripts
+RUN pnpm install --prod --force --frozen-lockfile
 
 # TARGET
 
