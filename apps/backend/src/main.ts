@@ -84,7 +84,8 @@ export const bootstrap = async (mode: 'LISTEN' | 'TEST' | 'SWAGGER') => {
     }
     case 'SWAGGER': {
       await application.init();
-      fs.writeFileSync('openapi.json', JSON.stringify(document));
+      const INDENT = 2;
+      fs.writeFileSync('openapi.json', JSON.stringify(document, undefined, INDENT));
       break;
     }
     default: {
