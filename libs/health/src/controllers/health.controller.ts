@@ -18,6 +18,7 @@ export class HealthController {
   @Get()
   @HealthCheck()
   async check() {
+    // Get the status of the application
     const healthCheckResult = await this.health.check([]);
     this.logger.debug(`Status is ${healthCheckResult.status}`, HealthController.name);
     return healthCheckResult;
