@@ -35,7 +35,7 @@ ENV APP_VERSION=$APP_VERSION
 
 WORKDIR /app
 
-COPY --chown=1001:0 --from=builder /build/node_modules/ ./node_modules/
-COPY --chown=1001:0 --from=builder /build/apps/backend/ ./apps/backend/
+COPY --from=builder /build/node_modules/ ./node_modules/
+COPY --from=builder /build/apps/backend/ ./apps/backend/
 
 CMD ["node", "apps/backend/dist/apps/backend/src/main.js"]
