@@ -25,14 +25,11 @@ RUN pnpm install --prod --force --frozen-lockfile --ignore-scripts
 
 FROM registry.access.redhat.com/ubi9/nodejs-20-minimal:1-37 AS production
 
-ARG APP_VERSION
+WORKDIR /app
 
 USER nobody
 
 ENV NODE_ENV production
-ENV APP_VERSION=$APP_VERSION
-
-WORKDIR /app
 
 COPY --from=builder /build/node_modules/ ./node_modules/
 COPY --from=builder /build/apps/backend/ ./apps/backend/
