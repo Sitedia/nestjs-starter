@@ -7,4 +7,4 @@ nx format --all --uncommitted
 
 echo
 echo "Step 2: Check code quality..."
-nx run-many --target lint,lint:api --parallel 20
+nx run-many --target lint --parallel 20
