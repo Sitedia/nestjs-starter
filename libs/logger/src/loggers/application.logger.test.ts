@@ -14,66 +14,62 @@ const setup = async (logFormat?: LogFormat, logLevels?: LogLevel[]) => {
   return { logger, loggerSpy };
 };
 
-describe('given the application is producing logs', () => {
-  describe('when the log format is CONSOLE', () => {
-    it('then I expect to see each log level with colors', async () => {
-      expect.assertions(2);
-      const { logger } = await setup(undefined, ['fatal', 'error', 'warn', 'log', 'debug', 'verbose']);
+describe('application logger', () => {
+  it('should display text in CONSOLE mode', async () => {
+    expect.assertions(2);
+    const { logger } = await setup(undefined, ['fatal', 'error', 'warn', 'log', 'debug', 'verbose']);
 
-      // Write warn log
-      const messageWarn = logger.formatMessage(
-        'warn',
-        'Test',
-        '1000',
-        'fatal',
-        'ApplicationLoggerTest',
-        new Date().toISOString(),
-      );
-      expect(messageWarn).not.toContain('{');
+    // Write warn log
+    const messageWarn = logger.formatMessage(
+      'warn',
+      'Test',
+      '1000',
+      'fatal',
+      'ApplicationLoggerTest',
+      new Date().toISOString(),
+    );
+    expect(messageWarn).not.toContain('{');
 
-      // Write log
-      const messageLog = logger.formatMessage(
-        'log',
-        'Test',
-        '1000',
-        'fatal',
-        'ApplicationLoggerTest',
-        new Date().toISOString(),
-      );
-      expect(messageLog).not.toContain('{');
-    });
+    // Write log
+    const messageLog = logger.formatMessage(
+      'log',
+      'Test',
+      '1000',
+      'fatal',
+      'ApplicationLoggerTest',
+      new Date().toISOString(),
+    );
+    expect(messageLog).not.toContain('{');
   });
 
-  describe('when the log format is JSON', () => {
-    it('then I expect to see all logs in JSON, without color', async () => {
-      expect.assertions(2);
-      const { logger } = await setup('JSON', ['fatal', 'error', 'warn', 'log', 'debug', 'verbose']);
+  it('should display JSON in JSON mode', async () => {
+    expect.assertions(2);
+    const { logger } = await setup('JSON', ['fatal', 'error', 'warn', 'log', 'debug', 'verbose']);
 
-      // Write warn log
-      const messageWarn = logger.formatMessage(
-        'warn',
-        'Test',
-        '1000',
-        'fatal',
-        'ApplicationLoggerTest',
-        new Date().toISOString(),
-      );
-      expect(messageWarn).toContain('{');
+    // Write warn log
+    const messageWarn = logger.formatMessage(
+      'warn',
+      'Test',
+      '1000',
+      'fatal',
+      'ApplicationLoggerTest',
+      new Date().toISOString(),
+    );
+    expect(messageWarn).toContain('{');
 
-      // Write log
-      const messageLog = logger.formatMessage(
-        'log',
-        'Test',
-        '1000',
-        'fatal',
-        'ApplicationLoggerTest',
-        new Date().toISOString(),
-      );
-      expect(messageLog).toContain('{');
-    });
+    // Write log
+    const messageLog = logger.formatMessage(
+      'log',
+      'Test',
+      '1000',
+      'fatal',
+      'ApplicationLoggerTest',
+      new Date().toISOString(),
+    );
+    expect(messageLog).toContain('{');
   });
 
-  it('then I can use the default configuration', async () => {
+  it('should handle different log levels in CONSOLE mode', async () => {
     expect.assertions(1);
     const { logger, loggerSpy } = await setup(undefined, ['fatal', 'error', 'warn', 'log', 'debug', 'verbose']);
     loggerSpy.mockImplementation(() => '');
@@ -85,7 +81,7 @@ describe('given the application is producing logs', () => {
     expect(loggerSpy).toHaveBeenCalledTimes(2);
   });
 
-  it('then I can use the JSON configuration', async () => {
+  it('should handle different log levels in JSON mode', async () => {
     expect.assertions(1);
     const { logger, loggerSpy } = await setup('JSON');
     loggerSpy.mockImplementation(() => '');

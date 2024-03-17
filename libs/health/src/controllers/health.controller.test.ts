@@ -11,8 +11,8 @@ const setup = async () => {
   return app.get(HealthController);
 };
 
-describe('when checking the application status', () => {
-  it('then I expect the status to be "ok"', async () => {
+describe('health endpoint', () => {
+  it('should return the status of the application', async () => {
     expect.assertions(1);
     const healthController = await setup();
     const healthCheckStatus = await healthController.check();

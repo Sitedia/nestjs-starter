@@ -3,8 +3,8 @@ import { ForbiddenException, HttpStatus, InternalServerErrorException } from '@n
 import { ExceptionDTO } from '../dto/exception.dto';
 import { ApplicationExceptionFilter, INTERNAL_SERVER_ERROR_MESSAGE } from './application-exception.filter';
 
-describe('catch exceptions', () => {
-  it('should return client exception message', async () => {
+describe('exception filter', () => {
+  it('should return a client exception with the message', async () => {
     expect.assertions(2);
     const applicationExceptionFilter = new ApplicationExceptionFilter();
 
@@ -32,7 +32,7 @@ describe('catch exceptions', () => {
     expect(result.message).toBe('My message');
   });
 
-  it('should not return server exception message', async () => {
+  it('should return a server exception without the message', async () => {
     expect.assertions(2);
     const applicationExceptionFilter = new ApplicationExceptionFilter();
 

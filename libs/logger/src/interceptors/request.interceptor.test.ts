@@ -22,8 +22,8 @@ const setup = async () => {
   return new RequestInterceptor(logger);
 };
 
-describe('log incoming requests', () => {
-  it('should log the incoming request', async () => {
+describe('request interceptor', () => {
+  it('should intercept the requests', async () => {
     expect.assertions(1);
     const requestInterceptor = await setup();
 
@@ -37,7 +37,7 @@ describe('log incoming requests', () => {
     expect(result.username).toBe('admin');
   });
 
-  it('should log the incoming request with warning delay', async () => {
+  it('should warn if the response delay is too long', async () => {
     expect.assertions(1);
     const requestInterceptor = await setup();
 
@@ -51,7 +51,7 @@ describe('log incoming requests', () => {
     expect(result.username).toBe('admin');
   });
 
-  it('should log the incoming request with client error', async () => {
+  it('should log client errors', async () => {
     expect.assertions(1);
     const requestInterceptor = await setup();
 
@@ -64,7 +64,7 @@ describe('log incoming requests', () => {
     await expect(lastValueFrom(observable)).rejects.toThrow('My error');
   });
 
-  it('should log the incoming request with server error', async () => {
+  it('should log the internal server errors', async () => {
     expect.assertions(1);
     const requestInterceptor = await setup();
 
