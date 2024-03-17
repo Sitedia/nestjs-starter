@@ -2,20 +2,25 @@
 FROM registry.access.redhat.com/ubi9/nodejs-20:1-34 AS builder
 
 WORKDIR /build
+USER root
 
-COPY --chown=1001:0 --chmod=755 nx.json package.json tsconfig.base.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY --chown=1001:0 --chmod=755 libs/health/package.json libs/health/project.json libs/health/tsconfig.json ./libs/health/
-COPY --chown=1001:0 --chmod=755 libs/health/src ./libs/health/src
-COPY --chown=1001:0 --chmod=755 libs/logger/package.json libs/logger/project.json libs/logger/tsconfig.json ./libs/logger/
-COPY --chown=1001:0 --chmod=755 libs/logger/src ./libs/logger/src
-COPY --chown=1001:0 --chmod=755 apps/backend/package.json apps/backend/nest-cli.json apps/backend/project.json apps/backend/tsconfig.json ./apps/backend/
-COPY --chown=1001:0 --chmod=755 apps/backend/src ./apps/backend/src
+COPY --chown=default --chmod=640 nx.json package.json tsconfig.base.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY --chown=default --chmod=640 libs/health/package.json libs/health/project.json  libs/health/tsconfig.json ./libs/health/
+COPY --chown=default --chmod=640 libs/health/src ./libs/health/src
+COPY --chown=default --chmod=640 libs/logger/package.json libs/logger/project.json libs/logger/tsconfig.json ./libs/logger/
+COPY --chown=default --chmod=640 libs/logger/src ./libs/logger/src
+COPY --chown=default --chmod=640 apps/backend/package.json apps/backend/project.json apps/backend/nest-cli.json apps/backend/tsconfig.json ./apps/backend/
+COPY --chown=default --chmod=640 apps/backend/src ./apps/backend/src
+RUN chmod -R u+X .
 
-RUN mkdir /build/apps/backend/node_modules
-RUN chmod 755 /build/apps/backend/node_modules
-RUN npm install -g --ignore-scripts @nestjs/cli pnpm
+USER default
+
+RUN ls -l ./apps/backend/src/
+
+RUN ls -l /build/apps/backend/src/configuration/configuration.ts
+RUN npm install -g --ignore-scripts @nestjs/cli pnpm nx
 RUN pnpm install --frozen-lockfile --ignore-scripts
-RUN npx nx build apps/backend
+RUN nx build apps/backend
 RUN pnpm install --prod --force --frozen-lockfile --ignore-scripts
 
 # TARGET

@@ -49,8 +49,7 @@
       "dependsOn": [
         "clear",
         {
-          "projects": ["libs/health", "libs/logger"],
-          "target": "build"
+          "projects": ["libs/health", "libs/logger"]
         }
       ]
     },
