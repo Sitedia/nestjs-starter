@@ -1,40 +1,79 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ApplicationLogger } from '@company/logger';
-import { Observable } from 'rxjs';
+import { ForbiddenException } from '@nestjs/common';
+import { delay, lastValueFrom, of, throwError } from 'rxjs';
 import { RequestInterceptor } from './request.interceptor';
 
+// Create a mock context for all interceptors in the tests
+const contextMock: any = {
+  switchToHttp: () => ({
+    getRequest: () => ({ url: 'http://localhost/my-query' }),
+    getResponse: () => ({ statusCode: 200 }),
+  }),
+};
+
+// Setup each test
 const setup = async () => {
   const logger = new ApplicationLogger({
-    logLevels: ['fatal', 'error'],
+    logLevels: [], // Disable all logs
     logFormat: 'CONSOLE',
   });
 
-  // Add a spy on the request interceptor
-  const requestInterceptor = new RequestInterceptor(logger);
-  const requestInterceptorSpy = jest.spyOn(requestInterceptor, 'intercept');
-
-  return { requestInterceptor, requestInterceptorSpy };
+  return new RequestInterceptor(logger);
 };
 
 describe('log incoming requests', () => {
   it('should log the incoming request', async () => {
     expect.assertions(1);
-    const { requestInterceptor, requestInterceptorSpy } = await setup();
-
-    // Mock the context
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const contextMock: any = {
-      switchToHttp: () => ({
-        getRequest: () => ({ url: 'http://localhost/my-query' }),
-        getResponse: () => ({ statusCode: 200 }),
-      }),
-    };
+    const requestInterceptor = await setup();
 
     // Mock the handler
     const handlerMock = {
-      handle: () => new Observable(),
+      handle: () => of({ username: 'admin' }),
     };
 
-    requestInterceptor.intercept(contextMock, handlerMock);
-    expect(requestInterceptorSpy).toHaveBeenCalledTimes(1);
+    const observable = requestInterceptor.intercept(contextMock, handlerMock);
+    const result = await lastValueFrom(observable);
+    expect(result.username).toBe('admin');
+  });
+
+  it('should log the incoming request with warning delay', async () => {
+    expect.assertions(1);
+    const requestInterceptor = await setup();
+
+    // Mock the handler
+    const handlerMock = {
+      handle: () => of({ username: 'admin' }).pipe(delay(1500)),
+    };
+
+    const observable = requestInterceptor.intercept(contextMock, handlerMock);
+    const result = await lastValueFrom(observable);
+    expect(result.username).toBe('admin');
+  });
+
+  it('should log the incoming request with client error', async () => {
+    expect.assertions(1);
+    const requestInterceptor = await setup();
+
+    // Mock the handler
+    const handlerMock = {
+      handle: () => throwError(() => new ForbiddenException('My error')),
+    };
+
+    const observable = requestInterceptor.intercept(contextMock, handlerMock);
+    await expect(lastValueFrom(observable)).rejects.toThrow('My error');
+  });
+
+  it('should log the incoming request with server error', async () => {
+    expect.assertions(1);
+    const requestInterceptor = await setup();
+
+    // Mock the handler
+    const handlerMock = {
+      handle: () => throwError(() => new Error('Internal error')),
+    };
+
+    const observable = requestInterceptor.intercept(contextMock, handlerMock);
+    await expect(lastValueFrom(observable)).rejects.toThrow('Internal error');
   });
 });
