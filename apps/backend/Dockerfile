@@ -4,13 +4,13 @@ FROM registry.access.redhat.com/ubi9/nodejs-20:1-34 AS builder
 WORKDIR /build
 USER root
 
-COPY --chown=default --chmod=640 nx.json package.json tsconfig.base.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY --chown=default --chmod=640 libs/health/package.json libs/health/project.json  libs/health/tsconfig.json ./libs/health/
-COPY --chown=default --chmod=640 libs/health/src ./libs/health/src
-COPY --chown=default --chmod=640 libs/logger/package.json libs/logger/project.json libs/logger/tsconfig.json ./libs/logger/
-COPY --chown=default --chmod=640 libs/logger/src ./libs/logger/src
-COPY --chown=default --chmod=640 apps/backend/package.json apps/backend/project.json apps/backend/nest-cli.json apps/backend/tsconfig.json ./apps/backend/
-COPY --chown=default --chmod=640 apps/backend/src ./apps/backend/src
+COPY --chown=default:root --chmod=640 nx.json package.json tsconfig.base.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY --chown=default:root --chmod=640 libs/health/package.json libs/health/project.json  libs/health/tsconfig.json ./libs/health/
+COPY --chown=default:root --chmod=640 libs/health/src ./libs/health/src
+COPY --chown=default:root --chmod=640 libs/logger/package.json libs/logger/project.json libs/logger/tsconfig.json ./libs/logger/
+COPY --chown=default:root --chmod=640 libs/logger/src ./libs/logger/src
+COPY --chown=default:root --chmod=640 apps/backend/package.json apps/backend/project.json apps/backend/nest-cli.json apps/backend/tsconfig.json ./apps/backend/
+COPY --chown=default:root --chmod=640 apps/backend/src ./apps/backend/src
 RUN chmod -R u+X .
 
 USER default
