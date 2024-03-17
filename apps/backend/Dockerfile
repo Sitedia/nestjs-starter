@@ -27,6 +27,8 @@ FROM registry.access.redhat.com/ubi9/nodejs-20-minimal:1-37 AS production
 
 ARG APP_VERSION
 
+USER nobody
+
 ENV NODE_ENV production
 ENV APP_VERSION=$APP_VERSION
 
