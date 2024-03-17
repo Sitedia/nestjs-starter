@@ -44,5 +44,6 @@
     "connectionId": "sitedia",
     "projectKey": "Sitedia_nestjs-starter"
   },
-  "sonarlint.output.showAnalyzerLogs": true
+  "sonarlint.output.showAnalyzerLogs": true,
+  "files.eol": "\r\n"
 }
