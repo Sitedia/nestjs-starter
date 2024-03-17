@@ -8,6 +8,7 @@ export class ApplicationExceptionFilter implements ExceptionFilter {
     const response = context.getResponse<Response>();
     const request = context.getRequest<Request>();
     const status = exception.getStatus();
+
     const message =
       exception.getStatus() < HttpStatus.INTERNAL_SERVER_ERROR
         ? exception.message

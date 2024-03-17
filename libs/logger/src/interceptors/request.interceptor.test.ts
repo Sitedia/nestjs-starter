@@ -25,6 +25,7 @@ describe('log incoming requests', () => {
     const contextMock: any = {
       switchToHttp: () => ({
         getRequest: () => ({ url: 'http://localhost/my-query' }),
+        getResponse: () => ({ statusCode: 200 }),
       }),
     };
 
