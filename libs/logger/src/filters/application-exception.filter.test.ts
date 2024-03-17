@@ -13,17 +13,18 @@ describe('catch exceptions', () => {
 
     let responseStatus: HttpStatus;
     let result: ExceptionDTO;
+    const responseMock = {
+      status: (status) => ({
+        json: (response) => {
+          responseStatus = status;
+          result = response;
+        },
+      }),
+    };
     const hostMock: any = {
       switchToHttp: () => ({
         getRequest: () => ({ url: 'http://localhost/my-query' }),
-        getResponse: () => ({
-          status: (status) => ({
-            json: (response) => {
-              responseStatus = status;
-              result = response;
-            },
-          }),
-        }),
+        getResponse: () => responseMock,
       }),
     };
     applicationExceptionFilter.catch(clientException, hostMock);
@@ -40,17 +41,18 @@ describe('catch exceptions', () => {
 
     let responseStatus: HttpStatus;
     let result: ExceptionDTO;
+    const responseMock = {
+      status: (status) => ({
+        json: (response) => {
+          responseStatus = status;
+          result = response;
+        },
+      }),
+    };
     const hostMock: any = {
       switchToHttp: () => ({
         getRequest: () => ({ url: 'http://localhost/my-query' }),
-        getResponse: () => ({
-          status: (status) => ({
-            json: (response) => {
-              responseStatus = status;
-              result = response;
-            },
-          }),
-        }),
+        getResponse: () => responseMock,
       }),
     };
     applicationExceptionFilter.catch(clientException, hostMock);
