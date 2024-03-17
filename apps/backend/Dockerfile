@@ -16,9 +16,6 @@ RUN chown -R 1001:0 .
 
 USER default
 
-RUN ls -l ./apps/backend/src/
-
-RUN ls -l /build/apps/backend/src/configuration/configuration.ts
 RUN npm install -g --ignore-scripts @nestjs/cli pnpm nx
 RUN pnpm install --frozen-lockfile --ignore-scripts
 RUN nx build apps/backend
