@@ -22,6 +22,7 @@ RUN nx build apps/backend
 RUN pnpm install --prod --force --frozen-lockfile --ignore-scripts
 
 # TARGET
+# aaa
 
 FROM registry.access.redhat.com/ubi9/nodejs-20-minimal:1-37 AS production
 
