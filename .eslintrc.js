@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
   extends: ['eslint:recommended', 'plugin:jest/all', 'plugin:unicorn/all', 'plugin:prettier/recommended'],
-  ignorePatterns: ['.eslintrc.js', 'prettier.config.js', 'jest.config.js', 'dotenv.config.ts'],
+  ignorePatterns: ['coverage/*', 'dist/*', '.eslintrc.js', 'prettier.config.js', 'jest.config.js', 'dotenv.config.js'],
   settings: { 'import/resolver': { typescript: true, node: true } },
   rules: {
     curly: 'error',
@@ -28,3 +28,4 @@ module.exports = {
     },
   ],
 };
+
