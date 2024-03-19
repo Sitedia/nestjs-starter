@@ -1,4 +1,3 @@
-/* Copyright (C) 2024 My company - All Rights Reserved */
 import { ApplicationLogger } from '@company/logger';
 import { Controller, Get } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';

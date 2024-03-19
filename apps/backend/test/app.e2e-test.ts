@@ -1,11 +1,9 @@
-/* Copyright (C) 2024 My company - All Rights Reserved */
+import { HttpStatus } from '@nestjs/common';
 import * as fs from 'node:fs';
 import * as request from 'supertest';
 import { bootstrap } from '../src/main';
 
-const setup = async () => {
-  return bootstrap('TEST');
-};
+const setup = async () => bootstrap('TEST');
 
 describe('nestjs application', () => {
   it('should display the status of the application', async () => {
@@ -18,7 +16,7 @@ describe('nestjs application', () => {
     const httpServer = application.getHttpServer();
     const response = await request(httpServer).get('/api/health');
 
-    expect(response.statusCode).toBe(200);
+    expect(response.statusCode).toBe(HttpStatus.OK);
     expect(response.body.status).toBe('ok');
   });
 
@@ -32,7 +30,7 @@ describe('nestjs application', () => {
     const application = await setup();
     const httpServer = application.getHttpServer();
     const response = await request(httpServer).get('/api/health');
-    expect(response.statusCode).toBe(200);
+    expect(response.statusCode).toBe(HttpStatus.OK);
     expect(response.body.status).toBe('ok');
   });
 

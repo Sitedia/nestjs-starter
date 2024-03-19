@@ -1,11 +1,10 @@
-/* Copyright (C) 2024 My company - All Rights Reserved */
 import { ConsoleLogger, Inject, Injectable, LogLevel } from '@nestjs/common';
 import { LoggerModuleOptions, MODULE_OPTIONS_TOKEN } from '../logger-module.definition';
 import { LogFormat } from '../models/log-format';
 
 @Injectable()
 export class ApplicationLogger extends ConsoleLogger {
-  private logFormat: LogFormat;
+  private readonly logFormat: LogFormat;
 
   constructor(@Inject(MODULE_OPTIONS_TOKEN) options: LoggerModuleOptions) {
     super();

@@ -1,7 +1,6 @@
-/* Copyright (C) 2024 My company - All Rights Reserved */
 import { CallHandler, ExecutionContext, HttpException, HttpStatus, Injectable, NestInterceptor } from '@nestjs/common';
 import { IncomingMessage } from 'node:http';
-import { Observable, catchError, tap, throwError } from 'rxjs';
+import { catchError, tap, throwError } from 'rxjs';
 import { ApplicationLogger } from '../loggers/application.logger';
 
 const DELAY_WARNING_THRESHOLD = 1000;
@@ -10,8 +9,7 @@ const DELAY_WARNING_THRESHOLD = 1000;
 export class RequestInterceptor implements NestInterceptor {
   constructor(private readonly logger: ApplicationLogger) {}
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
+  intercept(context: ExecutionContext, next: CallHandler) {
     const request: IncomingMessage = context.switchToHttp().getRequest();
     const response = context.switchToHttp().getResponse();
     const now = Date.now();

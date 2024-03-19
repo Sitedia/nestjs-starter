@@ -1,4 +1,3 @@
-/* Copyright (C) 2024 My company - All Rights Reserved */
 import { LogFormat } from '@company/logger';
 import { LogLevel } from '@nestjs/common';
 

@@ -1,5 +1,3 @@
-/* Copyright (C) 2024 My company - All Rights Reserved */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ArgumentsHost, ForbiddenException, HttpStatus, InternalServerErrorException } from '@nestjs/common';
 import { ExceptionDTO } from '../dto/exception.dto';
 import { ApplicationExceptionFilter, INTERNAL_SERVER_ERROR_MESSAGE } from './application-exception.filter';

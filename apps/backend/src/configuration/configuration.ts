@@ -1,4 +1,3 @@
-/* Copyright (C) 2024 My company - All Rights Reserved */
 import { LogLevel } from '@nestjs/common';
 import { Configuration } from './configuration.interface';
 

@@ -1,5 +1,3 @@
-/* Copyright (C) 2024 My company - All Rights Reserved */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ApplicationLogger } from '@company/logger';
 import { ExecutionContext, ForbiddenException } from '@nestjs/common';
 import { delay, lastValueFrom, of, throwError } from 'rxjs';

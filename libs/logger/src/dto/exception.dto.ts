@@ -1,4 +1,3 @@
-/* Copyright (C) 2024 My company - All Rights Reserved */
 import { HttpStatus } from '@nestjs/common';
 
 export class ExceptionDTO {

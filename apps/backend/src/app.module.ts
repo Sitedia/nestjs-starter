@@ -1,4 +1,3 @@
-/* Copyright (C) 2024 My company - All Rights Reserved */
 import { HealthModule } from '@company/health';
 import { LoggerModule } from '@company/logger';
 import { Module } from '@nestjs/common';
