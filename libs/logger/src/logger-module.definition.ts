@@ -1,3 +1,4 @@
+/* Copyright (C) 2024 My company - All Rights Reserved */
 import { ConfigurableModuleBuilder, LogLevel } from '@nestjs/common';
 import { LogFormat } from './models/log-format';
 

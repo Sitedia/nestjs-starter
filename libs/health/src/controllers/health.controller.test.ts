@@ -1,3 +1,4 @@
+/* Copyright (C) 2024 My company - All Rights Reserved */
 import { LoggerModule } from '@company/logger';
 import { Test, TestingModule } from '@nestjs/testing';
 import { HealthModule } from '../health.module';

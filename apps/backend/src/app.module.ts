@@ -1,3 +1,4 @@
+/* Copyright (C) 2024 My company - All Rights Reserved */
 import { HealthModule } from '@company/health';
 import { LoggerModule } from '@company/logger';
 import { Module } from '@nestjs/common';
@@ -14,7 +15,7 @@ import { ApplicationConfiguration } from './configuration/configuration.interfac
     HealthModule,
     LoggerModule.registerAsync({
       useFactory: (configService: ConfigService) => {
-        const applicationConfiguration: ApplicationConfiguration = configService.get('application')!;
+        const applicationConfiguration: ApplicationConfiguration = configService.get('application') ?? undefined;
         return {
           logLevels: applicationConfiguration.logLevels,
           logFormat: applicationConfiguration.logFormat,

@@ -1,3 +1,4 @@
+/* Copyright (C) 2024 My company - All Rights Reserved */
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { ExceptionDTO } from '../dto/exception.dto';

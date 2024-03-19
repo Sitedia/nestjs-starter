@@ -1,3 +1,4 @@
+/* Copyright (C) 2024 My company - All Rights Reserved */
 import { LogLevel } from '@nestjs/common';
 import { Configuration } from './configuration.interface';
 
@@ -8,7 +9,7 @@ export const configuration = (): Configuration => ({
     name: process.env.APP_NAME,
     description: process.env.APP_DESCRIPTION,
     version: process.env.APP_VERSION,
-    port: process.env.PORT ? Number.parseInt(process.env.PORT) : DEFAULT_PORT,
+    port: process.env.PORT ? Number.parseInt(process.env.PORT, 10) : DEFAULT_PORT,
     origin: process.env.APP_CORS_ORIGIN,
     basePath: process.env.APP_BASE_PATH,
     swaggerUIEnabled: process.env.APP_SWAGGER_UI_ENABLED === 'true',

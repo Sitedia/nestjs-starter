@@ -1,3 +1,4 @@
+/* Copyright (C) 2024 My company - All Rights Reserved */
 import { ConsoleLogger, Inject, Injectable, LogLevel } from '@nestjs/common';
 import { LoggerModuleOptions, MODULE_OPTIONS_TOKEN } from '../logger-module.definition';
 import { LogFormat } from '../models/log-format';

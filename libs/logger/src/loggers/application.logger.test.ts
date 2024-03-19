@@ -1,3 +1,4 @@
+/* Copyright (C) 2024 My company - All Rights Reserved */
 import { ApplicationLogger, LogFormat, LoggerModule } from '@company/logger';
 import { LogLevel } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';

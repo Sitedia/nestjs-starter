@@ -1,3 +1,4 @@
+/* Copyright (C) 2024 My company - All Rights Reserved */
 import * as fs from 'node:fs';
 import * as request from 'supertest';
 import { bootstrap } from '../src/main';

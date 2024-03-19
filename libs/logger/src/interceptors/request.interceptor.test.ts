@@ -1,3 +1,4 @@
+/* Copyright (C) 2024 My company - All Rights Reserved */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ApplicationLogger } from '@company/logger';
 import { ForbiddenException } from '@nestjs/common';

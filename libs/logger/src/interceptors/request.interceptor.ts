@@ -1,3 +1,4 @@
+/* Copyright (C) 2024 My company - All Rights Reserved */
 import { CallHandler, ExecutionContext, HttpException, HttpStatus, Injectable, NestInterceptor } from '@nestjs/common';
 import { IncomingMessage } from 'node:http';
 import { Observable, catchError, tap, throwError } from 'rxjs';

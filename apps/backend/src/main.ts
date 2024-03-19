@@ -1,3 +1,4 @@
+/* Copyright (C) 2024 My company - All Rights Reserved */
 import { ApplicationLogger, LogFormat } from '@company/logger';
 import { INestApplication, LogLevel } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
