@@ -1,6 +1,6 @@
 /* Copyright (C) 2024 My company - All Rights Reserved */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ForbiddenException, HttpStatus, InternalServerErrorException } from '@nestjs/common';
+import { ArgumentsHost, ForbiddenException, HttpStatus, InternalServerErrorException } from '@nestjs/common';
 import { ExceptionDTO } from '../dto/exception.dto';
 import { ApplicationExceptionFilter, INTERNAL_SERVER_ERROR_MESSAGE } from './application-exception.filter';
 
@@ -22,13 +22,13 @@ describe('exception filter', () => {
         },
       }),
     };
-    const hostMock: any = {
+    const hostMock = {
       switchToHttp: () => ({
         getRequest: () => ({ url: 'http://localhost/my-query' }),
         getResponse: () => responseMock,
       }),
     };
-    applicationExceptionFilter.catch(clientException, hostMock);
+    applicationExceptionFilter.catch(clientException, hostMock as ArgumentsHost);
     expect(responseStatus).toBe(HttpStatus.FORBIDDEN);
     expect(result.message).toBe('My message');
   });
@@ -50,13 +50,13 @@ describe('exception filter', () => {
         },
       }),
     };
-    const hostMock: any = {
+    const hostMock = {
       switchToHttp: () => ({
         getRequest: () => ({ url: 'http://localhost/my-query' }),
         getResponse: () => responseMock,
       }),
     };
-    applicationExceptionFilter.catch(clientException, hostMock);
+    applicationExceptionFilter.catch(clientException, hostMock as ArgumentsHost);
     expect(responseStatus).toBe(HttpStatus.INTERNAL_SERVER_ERROR);
     expect(result.message).toBe(INTERNAL_SERVER_ERROR_MESSAGE);
   });

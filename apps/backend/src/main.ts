@@ -3,7 +3,7 @@ import { ApplicationLogger, LogFormat } from '@company/logger';
 import { INestApplication, LogLevel } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
 import * as fs from 'node:fs';
 import { AppModule } from './app.module';
@@ -13,10 +13,10 @@ const configureSwagger = (
   application: INestApplication,
   applicationConfiguration: ApplicationConfiguration,
   applicationUrl: string,
-) => {
+): OpenAPIObject | undefined => {
   // Check if Swagger UI should enabled
   if (!applicationConfiguration.swaggerUIEnabled) {
-    return;
+    return undefined;
   }
 
   // Get the API url
