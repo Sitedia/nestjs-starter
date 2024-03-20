@@ -10,6 +10,7 @@ describe('exception filter', () => {
     // Create a client exception
     const clientException = new ForbiddenException('My message');
 
+    // Create a mock to intercept the exception
     let responseStatus: HttpStatus;
     let result: ExceptionDTO;
     const responseMock = {
@@ -26,6 +27,8 @@ describe('exception filter', () => {
         getResponse: () => responseMock,
       }),
     };
+
+    // Generate the exception
     applicationExceptionFilter.catch(clientException, hostMock as ArgumentsHost);
     expect(responseStatus).toBe(HttpStatus.FORBIDDEN);
     expect(result.message).toBe('My message');
@@ -38,6 +41,7 @@ describe('exception filter', () => {
     // Create a client exception
     const clientException = new InternalServerErrorException('My internal error');
 
+    // Create a mock to intercept the exception
     let responseStatus: HttpStatus;
     let result: ExceptionDTO;
     const responseMock = {
@@ -54,6 +58,8 @@ describe('exception filter', () => {
         getResponse: () => responseMock,
       }),
     };
+
+    // Generate the exception
     applicationExceptionFilter.catch(clientException, hostMock as ArgumentsHost);
     expect(responseStatus).toBe(HttpStatus.INTERNAL_SERVER_ERROR);
     expect(result.message).toBe(INTERNAL_SERVER_ERROR_MESSAGE);

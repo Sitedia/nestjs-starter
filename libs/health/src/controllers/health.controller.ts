@@ -4,7 +4,7 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { HealthCheck, HealthCheckService } from '@nestjs/terminus';
 
 /**
- * Health endpoint for container managers.
+ * Health endpoint for container managers like Kubernetes: GET /health
  */
 @ApiTags('health')
 @Controller('health')
