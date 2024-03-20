@@ -18,8 +18,8 @@ import { ApplicationLogger } from './loggers/application.logger';
       useClass: RequestInterceptor,
     },
     {
-      provide: APP_FILTER,
-      useClass: ApplicationExceptionFilter, // See https://docs.nestjs.com/exception-filters#binding-filters
+      provide: APP_FILTER, // See https://docs.nestjs.com/exception-filters#binding-filters
+      useClass: ApplicationExceptionFilter,
     },
   ],
   exports: [ApplicationLogger],
