@@ -13,9 +13,7 @@ export interface LoggerModuleOptions {
  * Logger module builder
  * See: https://docs.nestjs.com/fundamentals/dynamic-modules#configurable-module-builder
  */
-export const { ConfigurableModuleClass, MODULE_OPTIONS_TOKEN } = new ConfigurableModuleBuilder<LoggerModuleOptions>()
-  .setExtras({ global: true })
-  .build() as {
+export const { ConfigurableModuleClass, MODULE_OPTIONS_TOKEN } = new ConfigurableModuleBuilder<LoggerModuleOptions>().setExtras({ global: true }).build() as {
   ConfigurableModuleClass;
   MODULE_OPTIONS_TOKEN;
 };

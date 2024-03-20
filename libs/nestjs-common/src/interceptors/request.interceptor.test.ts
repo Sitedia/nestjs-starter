@@ -1,4 +1,4 @@
-import { ApplicationLogger } from '@company/logger';
+import { ApplicationLogger } from '@company/nestjs-common';
 import { ExecutionContext, ForbiddenException } from '@nestjs/common';
 import { delay, lastValueFrom, of, throwError } from 'rxjs';
 import { RequestInterceptor } from './request.interceptor';

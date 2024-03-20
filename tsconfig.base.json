@@ -19,8 +19,7 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@company/health": ["libs/health/src"],
-      "@company/logger": ["libs/logger/src"]
+      "@company/nestjs-common": ["libs/nestjs-common/src"]
     }
   }
 }

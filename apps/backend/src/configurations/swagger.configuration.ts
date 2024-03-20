@@ -2,11 +2,7 @@ import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
 import { ApplicationConfiguration } from './configuration.interface';
 
-export const configureSwagger = (
-  application: INestApplication,
-  applicationConfiguration: ApplicationConfiguration,
-  applicationUrl: string,
-): OpenAPIObject | undefined => {
+export const configureSwagger = (application: INestApplication, applicationConfiguration: ApplicationConfiguration, applicationUrl: string): OpenAPIObject | undefined => {
   // Check if Swagger UI should enabled
   if (!applicationConfiguration.swaggerUIEnabled) {
     return undefined;

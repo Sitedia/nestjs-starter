@@ -1,4 +1,4 @@
-import { LogFormat } from '@company/logger';
+import { LogFormat } from '@company/nestjs-common';
 import { HttpStatus } from '@nestjs/common';
 import * as fs from 'node:fs';
 import * as request from 'supertest';

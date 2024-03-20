@@ -40,14 +40,7 @@ export class ApplicationLogger extends ConsoleLogger {
     return super.formatContext(context.padEnd(contextLength, ' ').slice(0, contextLength));
   }
 
-  formatMessage(
-    logLevel: LogLevel,
-    message: unknown,
-    pidMessage: string,
-    formattedLogLevel: string,
-    contextMessage: string,
-    timestampDiff: string,
-  ): string {
+  formatMessage(logLevel: LogLevel, message: unknown, pidMessage: string, formattedLogLevel: string, contextMessage: string, timestampDiff: string): string {
     const output = this.stringifyMessage(message, logLevel);
     const level = this.colorize(formattedLogLevel, logLevel);
     const timestamp = new Date().toISOString();

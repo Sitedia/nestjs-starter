@@ -6,10 +6,8 @@ WORKDIR /build
 USER root
 
 COPY nx.json package.json tsconfig.base.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY libs/health/package.json libs/health/project.json  libs/health/tsconfig.json ./libs/health/
-COPY libs/health/src ./libs/health/src
-COPY libs/logger/package.json libs/logger/project.json libs/logger/tsconfig.json ./libs/logger/
-COPY libs/logger/src ./libs/logger/src
+COPY libs/nestjs-common/package.json libs/nestjs-common/project.json  libs/nestjs-common/tsconfig.json ./libs/nestjs-common/
+COPY libs/nestjs-common/src ./libs/nestjs-common/src
 COPY apps/backend/package.json apps/backend/project.json apps/backend/nest-cli.json apps/backend/tsconfig.json ./apps/backend/
 COPY apps/backend/src ./apps/backend/src
 RUN chown -R 1001:0 .

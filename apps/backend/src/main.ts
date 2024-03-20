@@ -1,6 +1,6 @@
 /* eslint-disable jest/require-hook */
-import { ApplicationLogger, LogFormat } from '@company/logger';
-import { INestApplication, LogLevel } from '@nestjs/common';
+import { ApplicationLogger } from '@company/nestjs-common';
+import { INestApplication } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import * as fs from 'node:fs';
@@ -11,11 +11,6 @@ import { configureSwagger } from './configurations/swagger.configuration';
 import { ApplicationMode } from './models/application-mode';
 
 export const bootstrap = async (mode: ApplicationMode): Promise<INestApplication> => {
-  // Create the logger before the application starts, to allow JSON logs during start
-  const LOG_FORMAT: LogFormat = process.env.APP_LOG_FORMAT === 'JSON' ? LogFormat.JSON : LogFormat.CONSOLE;
-  const LOG_LEVELS: LogLevel[] = process.env.APP_LOG_LEVELS?.split(',').map((format) => format.trim() as LogLevel);
-  const logger = new ApplicationLogger({ logFormat: LOG_FORMAT, logLevels: LOG_LEVELS });
-
   // Configure HTTPs
   const enableHTTPs = process.env['APP_TLS_ENABLED'] === 'true';
   const httpsOptions = {
@@ -25,15 +20,19 @@ export const bootstrap = async (mode: ApplicationMode): Promise<INestApplication
 
   // Init the application
   const application = await NestFactory.create(AppModule, {
+    bufferLogs: true, // buffer the first logs until out custom logger is set (see below)
     httpsOptions: enableHTTPs ? httpsOptions : undefined,
-    logger,
   });
+
+  // Set our custom logger (https://docs.nestjs.com/techniques/logger)
+  const applicationlogger = application.get(ApplicationLogger);
+  application.useLogger(applicationlogger);
 
   // Load the configuration
   const configService = application.get(ConfigService);
   const applicationConfiguration = configService.get<ApplicationConfiguration>(ConfigurationTopic.APPLICATION);
 
-  // Configure the entry point
+  // Secure the entry point
   secureEntrypoint(application, applicationConfiguration);
 
   // Configure Swagger
@@ -53,9 +52,8 @@ export const bootstrap = async (mode: ApplicationMode): Promise<INestApplication
       break;
     }
     default: {
-      application.listen(applicationConfiguration.port);
-      const logger = application.get(ApplicationLogger);
-      logger.log(`>>> Application is listening on ${applicationUrl}/${applicationConfiguration.basePath}`, 'Main');
+      await application.listen(applicationConfiguration.port);
+      applicationlogger.log(`>>> Application is listening on ${applicationUrl}/${applicationConfiguration.basePath}`, 'Main');
     }
   }
 

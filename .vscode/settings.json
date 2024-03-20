@@ -35,7 +35,7 @@
       "format": "svg"
     }
   ],
-  "eslint.workingDirectories": ["apps/backend", "libs/health", "libs/logger"],
+  "eslint.workingDirectories": ["apps/backend", "libs/nestjs-common"],
   "jest.jestCommandLine": "nx run-many --target test",
   "jest.outputConfig": "test-results-based",
   "jest.runMode": "on-demand",

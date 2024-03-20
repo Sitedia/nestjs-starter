@@ -1,4 +1,4 @@
-import { LoggerModule } from '@company/logger';
+import { LoggerModule } from '@company/nestjs-common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { HealthModule } from '../health.module';
 import { HealthController } from './health.controller';

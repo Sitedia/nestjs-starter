@@ -5,7 +5,7 @@ import { ExceptionDTO } from '../dto/exception.dto';
 export const INTERNAL_SERVER_ERROR_MESSAGE = 'An internal server error occurred';
 
 /**
- * Exception filter to filter the error message in case of internal server errors
+ * Exception filter return always the same error payload to the user, and hide the error message in case of internal server errors
  */
 @Catch(HttpException)
 export class ApplicationExceptionFilter implements ExceptionFilter {
@@ -16,8 +16,7 @@ export class ApplicationExceptionFilter implements ExceptionFilter {
     const status = exception.getStatus();
 
     // We should return the exception message only for client exceptions
-    const message =
-      exception.getStatus() < HttpStatus.INTERNAL_SERVER_ERROR ? exception.message : INTERNAL_SERVER_ERROR_MESSAGE;
+    const message = exception.getStatus() < HttpStatus.INTERNAL_SERVER_ERROR ? exception.message : INTERNAL_SERVER_ERROR_MESSAGE;
 
     // Payload to return in the HTTP response
     const payload: ExceptionDTO = {

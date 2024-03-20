@@ -1,7 +1,7 @@
-import { ApplicationLogger } from '@company/logger';
 import { Controller, Get } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { HealthCheck, HealthCheckService } from '@nestjs/terminus';
+import { ApplicationLogger } from '../../loggers/services/application.logger';
 
 /**
  * Health endpoint for container managers like Kubernetes: GET /health

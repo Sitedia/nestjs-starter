@@ -1,4 +1,4 @@
-import { ApplicationLogger, LogFormat, LoggerModule } from '@company/logger';
+import { ApplicationLogger, LogFormat, LoggerModule } from '@company/nestjs-common';
 import { LogLevel } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 
@@ -19,25 +19,11 @@ describe('application logger', () => {
     const logger = await setup(undefined, ['fatal', 'error', 'warn', 'log', 'debug', 'verbose']);
 
     // Write warn log
-    const messageWarn = logger.formatMessage(
-      'warn',
-      'Test',
-      '1000',
-      'fatal',
-      'ApplicationLoggerTest',
-      new Date().toISOString(),
-    );
+    const messageWarn = logger.formatMessage('warn', 'Test', '1000', 'fatal', 'ApplicationLoggerTest', new Date().toISOString());
     expect(messageWarn).not.toContain('{');
 
     // Write log
-    const messageLog = logger.formatMessage(
-      'log',
-      'Test',
-      '1000',
-      'fatal',
-      'ApplicationLoggerTest',
-      new Date().toISOString(),
-    );
+    const messageLog = logger.formatMessage('log', 'Test', '1000', 'fatal', 'ApplicationLoggerTest', new Date().toISOString());
     expect(messageLog).not.toContain('{');
   });
 
@@ -46,25 +32,11 @@ describe('application logger', () => {
     const logger = await setup(LogFormat.JSON, ['fatal', 'error', 'warn', 'log', 'debug', 'verbose']);
 
     // Write warn log
-    const messageWarn = logger.formatMessage(
-      'warn',
-      'Test',
-      '1000',
-      'fatal',
-      'ApplicationLoggerTest',
-      new Date().toISOString(),
-    );
+    const messageWarn = logger.formatMessage('warn', 'Test', '1000', 'fatal', 'ApplicationLoggerTest', new Date().toISOString());
     expect(messageWarn).toContain('{');
 
     // Write log
-    const messageLog = logger.formatMessage(
-      'log',
-      'Test',
-      '1000',
-      'fatal',
-      'ApplicationLoggerTest',
-      new Date().toISOString(),
-    );
+    const messageLog = logger.formatMessage('log', 'Test', '1000', 'fatal', 'ApplicationLoggerTest', new Date().toISOString());
     expect(messageLog).toContain('{');
   });
 

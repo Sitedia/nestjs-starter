@@ -1,5 +1,5 @@
 {
-  "name": "libs/health",
+  "name": "libs/nestjs-common",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "targets": {
@@ -7,72 +7,72 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": ["rimraf dist coverage"],
-        "cwd": "libs/health"
+        "cwd": "libs/nestjs-common"
       }
     },
     "clear:all": {
       "executor": "nx:run-commands",
       "options": {
         "commands": ["rimraf dist coverage node_modules"],
-        "cwd": "libs/health"
+        "cwd": "libs/nestjs-common"
       }
     },
     "format": {
       "executor": "nx:run-commands",
       "options": {
         "commands": ["prettier --write \"src/**/*.ts\""],
-        "cwd": "libs/health"
+        "cwd": "libs/nestjs-common"
       }
     },
     "lint": {
       "executor": "nx:run-commands",
       "options": {
         "commands": ["eslint . --fix"],
-        "cwd": "libs/health"
+        "cwd": "libs/nestjs-common"
       }
     },
     "build": {
       "executor": "nx:run-commands",
       "options": {
         "commands": ["nest build"],
-        "cwd": "libs/health"
+        "cwd": "libs/nestjs-common"
       }
     },
     "serve": {
       "executor": "nx:run-commands",
       "options": {
         "commands": ["nest start --watch"],
-        "cwd": "libs/health",
-        "envFile": "libs/health/.env.dev"
+        "cwd": "libs/nestjs-common",
+        "envFile": "libs/nestjs-common/.env.dev"
       }
     },
     "start": {
       "executor": "nx:run-commands",
       "options": {
         "commands": ["nest start"],
-        "cwd": "libs/health"
+        "cwd": "libs/nestjs-common"
       },
       "dependsOn": ["build"]
     },
     "start:prod": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["node dist/libs/health/src/main.js"],
-        "cwd": "libs/health"
+        "commands": ["node dist/libs/nestjs-common/src/main.js"],
+        "cwd": "libs/nestjs-common"
       },
       "dependsOn": ["build"]
     },
     "test": {
       "executor": "@nx/jest:jest",
       "options": {
-        "jestConfig": "libs/health/jest.config.js",
+        "jestConfig": "libs/nestjs-common/jest.config.js",
         "verbose": true
       }
     },
     "test:watch": {
       "executor": "@nx/jest:jest",
       "options": {
-        "jestConfig": "libs/health/jest.config.js",
+        "jestConfig": "libs/nestjs-common/jest.config.js",
         "watch": true
       }
     },
@@ -80,7 +80,7 @@
       "executor": "@nx/jest:jest",
       "options": {
         "codeCoverage": true,
-        "jestConfig": "libs/health/jest.config.js"
+        "jestConfig": "libs/nestjs-common/jest.config.js"
       },
       "dependsOn": ["clear"]
     },
@@ -88,7 +88,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": ["google-chrome index.html"],
-        "cwd": "libs/health/coverage/lcov-report"
+        "cwd": "libs/nestjs-common/coverage/lcov-report"
       }
     }
   }

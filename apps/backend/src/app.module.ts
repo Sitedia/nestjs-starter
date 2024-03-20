@@ -1,9 +1,7 @@
-import { HealthModule } from '@company/health';
-import { LoggerModule } from '@company/logger';
+import { ApplicationExceptionFilter, HealthModule, LoggerModule, RateLimitModule, RequestInterceptor } from '@company/nestjs-common';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { APP_GUARD } from '@nestjs/core';
-import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { configuration } from './configurations/configuration';
 import { ConfigurationTopic, LoggerConfiguration } from './configurations/configuration.interface';
 
@@ -14,8 +12,8 @@ import { ConfigurationTopic, LoggerConfiguration } from './configurations/config
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, load: [configuration] }),
-    ThrottlerModule.forRoot([{ ttl: 1000, limit: 100 }]),
     HealthModule,
+    RateLimitModule,
     LoggerModule.registerAsync({
       useFactory: (configService: ConfigService) => {
         const loggerConfiguration = configService.get<LoggerConfiguration>(ConfigurationTopic.LOGGER);
@@ -28,6 +26,15 @@ import { ConfigurationTopic, LoggerConfiguration } from './configurations/config
       inject: [ConfigService],
     }),
   ],
-  providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR, // see: https://docs.nestjs.com/interceptors#binding-interceptors
+      useClass: RequestInterceptor,
+    },
+    {
+      provide: APP_FILTER, // see https://docs.nestjs.com/exception-filters#binding-filters
+      useClass: ApplicationExceptionFilter,
+    },
+  ],
 })
 export class AppModule {}

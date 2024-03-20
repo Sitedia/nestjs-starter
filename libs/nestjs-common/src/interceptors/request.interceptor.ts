@@ -1,7 +1,7 @@
 import { CallHandler, ExecutionContext, HttpException, HttpStatus, Injectable, NestInterceptor } from '@nestjs/common';
 import { IncomingMessage } from 'node:http';
 import { catchError, tap, throwError } from 'rxjs';
-import { ApplicationLogger } from '../loggers/application.logger';
+import { ApplicationLogger } from '../loggers/services/application.logger';
 
 const DELAY_WARNING_THRESHOLD = 1000;
 
