@@ -23,9 +23,7 @@ describe('request interceptor', () => {
     const requestInterceptor = await setup();
 
     // Mock the handler
-    const handlerMock = {
-      handle: () => of({ username: 'admin' }),
-    };
+    const handlerMock = { handle: () => of({ username: 'admin' }) };
 
     const observable = requestInterceptor.intercept(contextMock as ExecutionContext, handlerMock);
     const result = await lastValueFrom(observable);
@@ -38,9 +36,7 @@ describe('request interceptor', () => {
 
     // Mock the handler
     const delayMs = 1500;
-    const handlerMock = {
-      handle: () => of({ username: 'admin' }).pipe(delay(delayMs)),
-    };
+    const handlerMock = { handle: () => of({ username: 'admin' }).pipe(delay(delayMs)) };
 
     const observable = requestInterceptor.intercept(contextMock as ExecutionContext, handlerMock);
     const result = await lastValueFrom(observable);
