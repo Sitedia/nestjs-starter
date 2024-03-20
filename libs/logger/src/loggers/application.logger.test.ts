@@ -41,7 +41,7 @@ describe('application logger', () => {
     expect(messageLog).not.toContain('{');
   });
 
-  it('should display JSON in JSON mode', async () => {
+  it('should display text in JSON mode', async () => {
     expect.assertions(2);
     const logger = await setup(LogFormat.JSON, ['fatal', 'error', 'warn', 'log', 'debug', 'verbose']);
 
