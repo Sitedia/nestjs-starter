@@ -3,6 +3,10 @@ import { Configuration } from './configuration.interface';
 
 const DEFAULT_PORT = 3000;
 
+/**
+ * Configuration of the application in Javascript format.
+ * The settings are loaded from environment variables.
+ */
 export const configuration = (): Configuration => ({
   application: {
     name: process.env.APP_NAME,
