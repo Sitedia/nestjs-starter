@@ -1,1 +1,4 @@
-export type LogFormat = 'CONSOLE' | 'JSON';
+export enum LogFormat {
+  CONSOLE = 'CONSOLE',
+  JSON = 'JSON',
+}

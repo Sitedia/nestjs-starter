@@ -2,22 +2,21 @@ import { ApplicationLogger, LogFormat, LoggerModule } from '@company/logger';
 import { LogLevel } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 
+/**
+ * Sets up each test with customizable context
+ */
 const setup = async (logFormat?: LogFormat, logLevels?: LogLevel[]) => {
   const testingModule: TestingModule = await Test.createTestingModule({
     imports: [LoggerModule.register({ global: true, logFormat, logLevels })],
   }).compile();
 
-  // Add spy on the logger
-  const logger = testingModule.get(ApplicationLogger);
-  const loggerSpy = jest.spyOn(logger, 'formatMessage');
-
-  return { logger, loggerSpy };
+  return testingModule.get(ApplicationLogger);
 };
 
 describe('application logger', () => {
   it('should display text in CONSOLE mode', async () => {
     expect.assertions(2);
-    const { logger } = await setup(undefined, ['fatal', 'error', 'warn', 'log', 'debug', 'verbose']);
+    const logger = await setup(undefined, ['fatal', 'error', 'warn', 'log', 'debug', 'verbose']);
 
     // Write warn log
     const messageWarn = logger.formatMessage(
@@ -44,7 +43,7 @@ describe('application logger', () => {
 
   it('should display JSON in JSON mode', async () => {
     expect.assertions(2);
-    const { logger } = await setup('JSON', ['fatal', 'error', 'warn', 'log', 'debug', 'verbose']);
+    const logger = await setup(LogFormat.JSON, ['fatal', 'error', 'warn', 'log', 'debug', 'verbose']);
 
     // Write warn log
     const messageWarn = logger.formatMessage(
@@ -71,7 +70,10 @@ describe('application logger', () => {
 
   it('should handle different log levels in CONSOLE mode', async () => {
     expect.assertions(1);
-    const { logger, loggerSpy } = await setup(undefined, ['fatal', 'error', 'warn', 'log', 'debug', 'verbose']);
+    const logger = await setup(undefined, ['fatal', 'error', 'warn', 'log', 'debug', 'verbose']);
+
+    // Add a spy on the logger when formatting the message
+    const loggerSpy = jest.spyOn(logger, 'formatMessage');
     loggerSpy.mockImplementation(() => '');
 
     // Write logs
@@ -83,7 +85,10 @@ describe('application logger', () => {
 
   it('should handle different log levels in JSON mode', async () => {
     expect.assertions(1);
-    const { logger, loggerSpy } = await setup('JSON');
+    const logger = await setup(LogFormat.JSON);
+
+    // Add a spy on the logger when formatting the message
+    const loggerSpy = jest.spyOn(logger, 'formatMessage');
     loggerSpy.mockImplementation(() => '');
 
     // Write logs

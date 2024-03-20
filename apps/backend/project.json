@@ -46,7 +46,12 @@
         "commands": ["nest build"],
         "cwd": "apps/backend"
       },
-      "dependsOn": [{ "dependencies": true, "target": "clear" }]
+      "dependsOn": [
+        {
+          "dependencies": true,
+          "target": "clear"
+        }
+      ]
     },
     "serve": {
       "executor": "nx:run-commands",

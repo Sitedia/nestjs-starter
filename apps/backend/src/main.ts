@@ -45,8 +45,14 @@ const secureEntrypoint = (application: INestApplication, applicationConfiguratio
   return this;
 };
 
-export const bootstrap = async (mode: 'LISTEN' | 'TEST' | 'SWAGGER') => {
-  const LOG_FORMAT: LogFormat = process.env.APP_LOG_FORMAT === 'JSON' ? 'JSON' : 'CONSOLE';
+export enum ApplicationMode {
+  LISTEN = 'LISTEN',
+  TEST = 'test',
+  SWAGGER = 'SWAGGER',
+}
+
+export const bootstrap = async (mode: ApplicationMode) => {
+  const LOG_FORMAT: LogFormat = process.env.APP_LOG_FORMAT === 'JSON' ? LogFormat.JSON : LogFormat.CONSOLE;
   const LOG_LEVELS: LogLevel[] = process.env.APP_LOG_LEVELS?.split(',').map((format) => format.trim() as LogLevel);
 
   // Configure HTTPs
@@ -78,11 +84,11 @@ export const bootstrap = async (mode: 'LISTEN' | 'TEST' | 'SWAGGER') => {
 
   // Start the application
   switch (mode) {
-    case 'TEST': {
+    case ApplicationMode.TEST: {
       await application.init();
       break;
     }
-    case 'SWAGGER': {
+    case ApplicationMode.SWAGGER: {
       await application.init();
       const INDENT = 2;
       fs.writeFileSync('openapi.json', JSON.stringify(document, undefined, INDENT));
@@ -99,4 +105,4 @@ export const bootstrap = async (mode: 'LISTEN' | 'TEST' | 'SWAGGER') => {
 };
 
 // eslint-disable-next-line jest/require-hook
-bootstrap(process.env.APP_MODE as 'LISTEN' | 'TEST' | 'SWAGGER');
+bootstrap(process.env.APP_MODE as ApplicationMode);

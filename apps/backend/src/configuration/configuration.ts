@@ -1,3 +1,4 @@
+import { LogFormat } from '@company/logger';
 import { LogLevel } from '@nestjs/common';
 import { Configuration } from './configuration.interface';
 
@@ -19,7 +20,7 @@ export const configuration = (): Configuration => ({
   },
   logger: {
     levels: process.env.APP_LOG_LEVELS?.split(',').map((format) => format.trim() as LogLevel),
-    format: process.env.APP_LOG_FORMAT === 'JSON' ? 'JSON' : 'CONSOLE',
+    format: process.env.APP_LOG_FORMAT === 'JSON' ? LogFormat.JSON : LogFormat.CONSOLE,
     correlationIdField: 'correlationId',
   },
 });

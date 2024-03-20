@@ -5,6 +5,10 @@ import { ApplicationLogger } from '../loggers/application.logger';
 
 const DELAY_WARNING_THRESHOLD = 1000;
 
+/**
+ * Interceptor to track calls to NestJS.
+ * Note: only calls to the API are tracked here, calls on static files and invalid paths may not appear.
+ */
 @Injectable()
 export class RequestInterceptor implements NestInterceptor {
   constructor(private readonly logger: ApplicationLogger) {}

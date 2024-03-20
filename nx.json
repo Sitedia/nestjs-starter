@@ -9,7 +9,6 @@
       "inputs": ["production", "^production"]
     }
   },
-  "neverConnectToCloud": true,
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "sharedGlobals": [],

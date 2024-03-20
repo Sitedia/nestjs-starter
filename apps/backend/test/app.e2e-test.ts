@@ -1,9 +1,8 @@
+import { LogFormat } from '@company/logger';
 import { HttpStatus } from '@nestjs/common';
 import * as fs from 'node:fs';
 import * as request from 'supertest';
-import { bootstrap } from '../src/main';
-
-const setup = async () => bootstrap('TEST');
+import { ApplicationMode, bootstrap } from '../src/main';
 
 describe('nestjs application', () => {
   it('should display the status of the application', async () => {
@@ -12,7 +11,7 @@ describe('nestjs application', () => {
     process.env.APP_TLS_ENABLED = 'false';
     process.env.APP_SWAGGER_UI_ENABLED = 'true';
     process.env.APP_LOG_FORMAT = 'CONSOLE';
-    const application = await setup();
+    const application = await bootstrap(ApplicationMode.TEST);
     const httpServer = application.getHttpServer();
     const response = await request(httpServer).get('/api/health');
 
@@ -26,8 +25,8 @@ describe('nestjs application', () => {
     process.env.PORT = '3001';
     process.env.APP_TLS_ENABLED = 'false';
     process.env.APP_SWAGGER_UI_ENABLED = 'true';
-    process.env.APP_LOG_FORMAT = 'CONSOLE';
-    const application = await setup();
+    process.env.APP_LOG_FORMAT = LogFormat.CONSOLE;
+    const application = await bootstrap(ApplicationMode.TEST);
     const httpServer = application.getHttpServer();
     const response = await request(httpServer).get('/api/health');
     expect(response.statusCode).toBe(HttpStatus.OK);
@@ -40,7 +39,7 @@ describe('nestjs application', () => {
     process.env.APP_TLS_ENABLED = 'true';
     process.env.APP_SWAGGER_UI_ENABLED = 'false';
     process.env.APP_LOG_FORMAT = 'JSON';
-    const application = await bootstrap('LISTEN');
+    const application = await bootstrap(ApplicationMode.LISTEN);
     const httpServer = application.getHttpServer();
 
     expect(httpServer).toBeDefined();
@@ -51,8 +50,8 @@ describe('nestjs application', () => {
     process.env.PORT = '3001';
     process.env.APP_TLS_ENABLED = 'false';
     process.env.APP_SWAGGER_UI_ENABLED = 'true';
-    process.env.APP_LOG_FORMAT = 'CONSOLE';
-    const application = await bootstrap('SWAGGER');
+    process.env.APP_LOG_FORMAT = LogFormat.CONSOLE;
+    const application = await bootstrap(ApplicationMode.SWAGGER);
     await application.close();
     expect(fs.existsSync('openapi.json')).toBe(true);
   });

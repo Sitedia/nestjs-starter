@@ -11,13 +11,9 @@ const contextMock = {
   }),
 };
 
-// Setup each test
+// Set up each test
 const setup = async () => {
-  const logger = new ApplicationLogger({
-    logLevels: [], // Disable all logs
-    logFormat: 'CONSOLE',
-  });
-
+  const logger = new ApplicationLogger({ logLevels: [] }); // Disable all logs
   return new RequestInterceptor(logger);
 };
 
@@ -56,9 +52,7 @@ describe('request interceptor', () => {
     const requestInterceptor = await setup();
 
     // Mock the handler
-    const handlerMock = {
-      handle: () => throwError(() => new ForbiddenException('My error')),
-    };
+    const handlerMock = { handle: () => throwError(() => new ForbiddenException('My error')) };
 
     const observable = requestInterceptor.intercept(contextMock as ExecutionContext, handlerMock);
     await expect(lastValueFrom(observable)).rejects.toThrow('My error');
@@ -69,9 +63,7 @@ describe('request interceptor', () => {
     const requestInterceptor = await setup();
 
     // Mock the handler
-    const handlerMock = {
-      handle: () => throwError(() => new Error('Internal error')),
-    };
+    const handlerMock = { handle: () => throwError(() => new Error('Internal error')) };
 
     const observable = requestInterceptor.intercept(contextMock as ExecutionContext, handlerMock);
     await expect(lastValueFrom(observable)).rejects.toThrow('Internal error');

@@ -28,7 +28,12 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['**/*.test.ts', '**/*.e2e-test.ts'],
+      files: ['*.ts'],
+      extends: ['plugin:@typescript-eslint/strict', 'plugin:import/recommended'],
+      parserOptions: { project: './tsconfig.json' }, // looks for tsconfig.json the folder from which the linter is executed
+    },
+    {
+      files: ['*.test.ts', '*.e2e-test.ts'],
       rules: {
         'no-magic-numbers': 'off',
         'max-lines-per-function': 'off',
