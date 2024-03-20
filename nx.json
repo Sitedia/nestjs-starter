@@ -5,25 +5,14 @@
       "cache": false
     },
     "build": {
-      "dependsOn": [
-        "clear",
-        "^build"
-      ],
-      "inputs": [
-        "production",
-        "^production"
-      ]
+      "dependsOn": ["clear", "^build"],
+      "inputs": ["production", "^production"]
     }
   },
   "namedInputs": {
-    "default": [
-      "{projectRoot}/**/*",
-      "sharedGlobals"
-    ],
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "sharedGlobals": [],
-    "production": [
-      "default"
-    ]
+    "production": ["default"]
   },
   "defaultBase": "main"
 }
