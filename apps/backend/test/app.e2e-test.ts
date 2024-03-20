@@ -2,7 +2,8 @@ import { LogFormat } from '@company/logger';
 import { HttpStatus } from '@nestjs/common';
 import * as fs from 'node:fs';
 import * as request from 'supertest';
-import { ApplicationMode, bootstrap } from '../src/main';
+import { bootstrap } from '../src/main';
+import { ApplicationMode } from '../src/models/application-mode';
 
 describe('nestjs application', () => {
   it('should display the status of the application', async () => {
@@ -39,7 +40,7 @@ describe('nestjs application', () => {
     process.env.APP_TLS_ENABLED = 'true';
     process.env.APP_SWAGGER_UI_ENABLED = 'false';
     process.env.APP_LOG_FORMAT = 'JSON';
-    const application = await bootstrap(ApplicationMode.LISTEN);
+    const application = await bootstrap(ApplicationMode.SERVER);
     const httpServer = application.getHttpServer();
 
     expect(httpServer).toBeDefined();

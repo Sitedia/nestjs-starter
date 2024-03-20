@@ -4,8 +4,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
-import { configuration } from './configuration/configuration';
-import { ConfigurationTopic, LoggerConfiguration } from './configuration/configuration.interface';
+import { configuration } from './configurations/configuration';
+import { ConfigurationTopic, LoggerConfiguration } from './configurations/configuration.interface';
 
 /**
  * Content of the application.

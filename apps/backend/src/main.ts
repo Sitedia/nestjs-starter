@@ -1,59 +1,20 @@
+/* eslint-disable jest/require-hook */
 import { ApplicationLogger, LogFormat } from '@company/logger';
 import { INestApplication, LogLevel } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
-import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
-import helmet from 'helmet';
 import * as fs from 'node:fs';
 import { AppModule } from './app.module';
-import { ApplicationConfiguration, ConfigurationTopic } from './configuration/configuration.interface';
+import { ApplicationConfiguration, ConfigurationTopic } from './configurations/configuration.interface';
+import { secureEntrypoint } from './configurations/entrypoint.configuration';
+import { configureSwagger } from './configurations/swagger.configuration';
+import { ApplicationMode } from './models/application-mode';
 
-const configureSwagger = (
-  application: INestApplication,
-  applicationConfiguration: ApplicationConfiguration,
-  applicationUrl: string,
-): OpenAPIObject | undefined => {
-  // Check if Swagger UI should enabled
-  if (!applicationConfiguration.swaggerUIEnabled) {
-    return undefined;
-  }
-
-  // Get the API url
-
-  const config = new DocumentBuilder()
-    .setTitle(applicationConfiguration.name)
-    .setDescription(applicationConfiguration.description)
-    .setVersion(applicationConfiguration.version)
-    .addTag('health')
-    .addServer(applicationUrl)
-    .build();
-
-  const document = SwaggerModule.createDocument(application, config);
-  SwaggerModule.setup(applicationConfiguration.basePath, application, document, {
-    jsonDocumentUrl: '/api/openapi-docs',
-  });
-
-  return document;
-};
-
-const secureEntrypoint = (application: INestApplication, applicationConfiguration: ApplicationConfiguration) => {
-  application.setGlobalPrefix(applicationConfiguration.basePath);
-  application.use(helmet());
-  application.enableCors({ origin: applicationConfiguration.origin });
-  application.enableVersioning();
-
-  return this;
-};
-
-export enum ApplicationMode {
-  LISTEN = 'LISTEN',
-  TEST = 'test',
-  SWAGGER = 'SWAGGER',
-}
-
-export const bootstrap = async (mode: ApplicationMode) => {
+export const bootstrap = async (mode: ApplicationMode): Promise<INestApplication> => {
+  // Create the logger before the application starts, to allow JSON logs during start
   const LOG_FORMAT: LogFormat = process.env.APP_LOG_FORMAT === 'JSON' ? LogFormat.JSON : LogFormat.CONSOLE;
   const LOG_LEVELS: LogLevel[] = process.env.APP_LOG_LEVELS?.split(',').map((format) => format.trim() as LogLevel);
+  const logger = new ApplicationLogger({ logFormat: LOG_FORMAT, logLevels: LOG_LEVELS });
 
   // Configure HTTPs
   const enableHTTPs = process.env['APP_TLS_ENABLED'] === 'true';
@@ -65,10 +26,7 @@ export const bootstrap = async (mode: ApplicationMode) => {
   // Init the application
   const application = await NestFactory.create(AppModule, {
     httpsOptions: enableHTTPs ? httpsOptions : undefined,
-    logger: new ApplicationLogger({
-      logFormat: LOG_FORMAT,
-      logLevels: LOG_LEVELS,
-    }),
+    logger,
   });
 
   // Load the configuration
@@ -82,7 +40,7 @@ export const bootstrap = async (mode: ApplicationMode) => {
   const applicationUrl = `${enableHTTPs ? 'https' : 'http'}://localhost:${applicationConfiguration.port}`;
   const document = configureSwagger(application, applicationConfiguration, applicationUrl);
 
-  // Start the application
+  // Start the application in the requested mode
   switch (mode) {
     case ApplicationMode.TEST: {
       await application.init();
@@ -104,5 +62,4 @@ export const bootstrap = async (mode: ApplicationMode) => {
   return application;
 };
 
-// eslint-disable-next-line jest/require-hook
 bootstrap(process.env.APP_MODE as ApplicationMode);
