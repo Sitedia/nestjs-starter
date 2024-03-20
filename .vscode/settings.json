@@ -45,6 +45,6 @@
     "projectKey": "Sitedia_nestjs-starter"
   },
   "sonarlint.output.showAnalyzerLogs": true,
-  "files.eol": "\r\n",
+  "files.eol": "\n",
   "sonarlint.disableTelemetry": true
 }
