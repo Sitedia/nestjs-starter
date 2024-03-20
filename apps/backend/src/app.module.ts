@@ -5,8 +5,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { configuration } from './configuration/configuration';
-import { ApplicationConfiguration } from './configuration/configuration.interface';
+import { ConfigurationTopic, LoggerConfiguration } from './configuration/configuration.interface';
 
+/**
+ * Content of the application.
+ * In this design, a NestJS application is simply a group of NestJS modules.
+ */
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, load: [configuration] }),
@@ -14,11 +18,11 @@ import { ApplicationConfiguration } from './configuration/configuration.interfac
     HealthModule,
     LoggerModule.registerAsync({
       useFactory: (configService: ConfigService) => {
-        const applicationConfiguration = configService.get<ApplicationConfiguration>('application');
+        const loggerConfiguration = configService.get<LoggerConfiguration>(ConfigurationTopic.LOGGER);
         return {
-          logLevels: applicationConfiguration.logLevels,
-          logFormat: applicationConfiguration.logFormat,
-          correlationIdField: applicationConfiguration.logCorrelationIdField,
+          logLevels: loggerConfiguration.levels,
+          logFormat: loggerConfiguration.format,
+          correlationIdField: loggerConfiguration.correlationIdField,
         };
       },
       inject: [ConfigService],

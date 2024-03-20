@@ -6,7 +6,7 @@ import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
 import * as fs from 'node:fs';
 import { AppModule } from './app.module';
-import { ApplicationConfiguration } from './configuration/configuration.interface';
+import { ApplicationConfiguration, ConfigurationTopic } from './configuration/configuration.interface';
 
 const configureSwagger = (
   application: INestApplication,
@@ -67,7 +67,7 @@ export const bootstrap = async (mode: 'LISTEN' | 'TEST' | 'SWAGGER') => {
 
   // Load the configuration
   const configService = application.get(ConfigService);
-  const applicationConfiguration = configService.get<ApplicationConfiguration>('application');
+  const applicationConfiguration = configService.get<ApplicationConfiguration>(ConfigurationTopic.APPLICATION);
 
   // Configure the entry point
   secureEntrypoint(application, applicationConfiguration);
