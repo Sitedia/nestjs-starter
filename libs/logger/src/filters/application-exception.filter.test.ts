@@ -5,10 +5,6 @@ import { ApplicationExceptionFilter, INTERNAL_SERVER_ERROR_MESSAGE } from './app
 describe('exception filter', () => {
   it('should return a client exception with the message', async () => {
     expect.assertions(2);
-    const applicationExceptionFilter = new ApplicationExceptionFilter();
-
-    // Create a client exception
-    const clientException = new ForbiddenException('My message');
 
     // Create a mock to intercept the exception
     let responseStatus: HttpStatus;
@@ -28,18 +24,16 @@ describe('exception filter', () => {
       }),
     };
 
-    // Generate the exception
-    applicationExceptionFilter.catch(clientException, hostMock as ArgumentsHost);
+    // Trigger the exception
+    const applicationExceptionFilter = new ApplicationExceptionFilter();
+    applicationExceptionFilter.catch(new ForbiddenException('My message'), hostMock as ArgumentsHost);
+
     expect(responseStatus).toBe(HttpStatus.FORBIDDEN);
     expect(result.message).toBe('My message');
   });
 
   it('should return a server exception without the message', async () => {
     expect.assertions(2);
-    const applicationExceptionFilter = new ApplicationExceptionFilter();
-
-    // Create a client exception
-    const clientException = new InternalServerErrorException('My internal error');
 
     // Create a mock to intercept the exception
     let responseStatus: HttpStatus;
@@ -59,8 +53,10 @@ describe('exception filter', () => {
       }),
     };
 
-    // Generate the exception
-    applicationExceptionFilter.catch(clientException, hostMock as ArgumentsHost);
+    // Trigger the exception
+    const applicationExceptionFilter = new ApplicationExceptionFilter();
+    applicationExceptionFilter.catch(new InternalServerErrorException('My internal error'), hostMock as ArgumentsHost);
+
     expect(responseStatus).toBe(HttpStatus.INTERNAL_SERVER_ERROR);
     expect(result.message).toBe(INTERNAL_SERVER_ERROR_MESSAGE);
   });
