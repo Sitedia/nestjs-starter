@@ -3,6 +3,8 @@ import { LogLevel } from '@nestjs/common';
 import { Configuration } from './configuration.interface';
 
 const DEFAULT_PORT = 3000;
+const DEFAULT_RATE_LIMIT_TTL = 1000;
+const DEFAULT_RATE_LIMIT_LIMIT = 100;
 
 /**
  * Configuration in Typescript format to be easily used in the source code.
@@ -22,5 +24,9 @@ export const configuration = (): Configuration => ({
     levels: process.env.APP_LOG_LEVELS?.split(',').map((format) => format.trim() as LogLevel),
     format: process.env.APP_LOG_FORMAT === 'JSON' ? LogFormat.JSON : LogFormat.CONSOLE,
     correlationIdField: 'correlationId',
+  },
+  rateLimit: {
+    ttl: process.env.APP_RATE_LIMIT_TTL ? Number.parseInt(process.env.APP_RATE_LIMIT_TTL, 10) : DEFAULT_RATE_LIMIT_TTL,
+    limit: process.env.APP_RATE_LIMIT_LIMIT ? Number.parseInt(process.env.APP_RATE_LIMIT_LIMIT, 10) : DEFAULT_RATE_LIMIT_LIMIT,
   },
 });

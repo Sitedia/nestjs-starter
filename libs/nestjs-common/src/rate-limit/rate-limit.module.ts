@@ -1,7 +1,13 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { ConfigurableModuleClass as ConfigurableLoggerModule } from './rate-limit-module.definition';
 
+/**
+ * Dynamic module for the logger
+ * See: https://docs.nestjs.com/fundamentals/dynamic-modules#configurable-module-builder
+ */
+@Global()
 @Module({
   imports: [ThrottlerModule.forRoot([{ ttl: 1000, limit: 1 }])],
   providers: [
@@ -11,4 +17,4 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
     },
   ],
 })
-export class RateLimitModule {}
+export class RateLimitModule extends ConfigurableLoggerModule {}

@@ -7,6 +7,7 @@ import { LogLevel } from '@nestjs/common';
 export enum ConfigurationTopic {
   APPLICATION = 'application',
   LOGGER = 'logger',
+  RATE_LIMIT = 'rateLimit',
 }
 
 /**
@@ -32,9 +33,18 @@ export interface LoggerConfiguration {
 }
 
 /**
+ * Structure of the rate limite configuration
+ */
+export interface RateLimitConfiguration {
+  ttl: number;
+  limit: number;
+}
+
+/**
  * Final structure of the whole configuration
  */
 export interface Configuration {
   application: ApplicationConfiguration;
   logger: LoggerConfiguration;
+  rateLimit: RateLimitConfiguration;
 }

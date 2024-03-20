@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { configuration } from './configurations/configuration';
-import { ConfigurationTopic, LoggerConfiguration } from './configurations/configuration.interface';
+import { ConfigurationTopic, LoggerConfiguration, RateLimitConfiguration } from './configurations/configuration.interface';
 
 /**
  * Content of the application.
@@ -13,7 +13,16 @@ import { ConfigurationTopic, LoggerConfiguration } from './configurations/config
   imports: [
     ConfigModule.forRoot({ isGlobal: true, load: [configuration] }),
     HealthModule,
-    RateLimitModule,
+    RateLimitModule.registerAsync({
+      useFactory: (configService: ConfigService) => {
+        const rateLimitConfiguration = configService.get<RateLimitConfiguration>(ConfigurationTopic.RATE_LIMIT);
+        return {
+          ttl: rateLimitConfiguration.ttl,
+          limit: rateLimitConfiguration.limit,
+        };
+      },
+      inject: [ConfigService],
+    }),
     LoggerModule.registerAsync({
       useFactory: (configService: ConfigService) => {
         const loggerConfiguration = configService.get<LoggerConfiguration>(ConfigurationTopic.LOGGER);
