@@ -2,7 +2,7 @@ import { LogFormat } from '@company/logger';
 import { LogLevel } from '@nestjs/common';
 
 /**
- * Topics of the configuration.
+ * Topics of the configuration
  */
 export enum ConfigurationTopic {
   APPLICATION = 'application',
@@ -10,7 +10,7 @@ export enum ConfigurationTopic {
 }
 
 /**
- * Structure of the main configuration about the application.
+ * Structure of the application configuration
  */
 export interface ApplicationConfiguration {
   name: string;
@@ -23,7 +23,7 @@ export interface ApplicationConfiguration {
 }
 
 /**
- * Structure of the logger configuration.
+ * Structure of the logger configuration
  */
 export interface LoggerConfiguration {
   levels: LogLevel[];
@@ -32,7 +32,7 @@ export interface LoggerConfiguration {
 }
 
 /**
- * Structure of the configuration
+ * Final structure of the whole configuration
  */
 export interface Configuration {
   application: ApplicationConfiguration;
