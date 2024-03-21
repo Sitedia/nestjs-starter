@@ -13,7 +13,6 @@ import { ConfigurationTopic } from './configurations/configuration.interface';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, load: [configuration] }),
-    HealthModule,
     ThrottlerModule.forRootAsync({
       useFactory: (configService: ConfigService) => configService.get(ConfigurationTopic.RATE_LIMIT),
       inject: [ConfigService],
@@ -22,10 +21,11 @@ import { ConfigurationTopic } from './configurations/configuration.interface';
       useFactory: (configService: ConfigService) => configService.get(ConfigurationTopic.LOGGER),
       inject: [ConfigService],
     }),
+    HealthModule,
   ],
   providers: [
     {
-      provide: APP_GUARD, // apply the rate limit on each endpoint
+      provide: APP_GUARD, // see: https://docs.nestjs.com/security/rate-limiting#rate-limiting
       useClass: ThrottlerGuard,
     },
     {
