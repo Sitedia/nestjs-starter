@@ -1,5 +1,5 @@
 /* eslint-disable jest/require-hook */
-import { ApplicationLogger } from '@company/nestjs-common';
+import { ApplicationLogger, constants } from '@company/nestjs-common';
 import { INestApplication } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
@@ -9,9 +9,6 @@ import { ApplicationOptions, ConfigurationOptions } from './configurations/confi
 import { secureEntrypoint } from './configurations/entrypoint.configuration';
 import { configureSwagger } from './configurations/swagger.configuration';
 import { ApplicationMode } from './models/application-model.enum';
-
-// Indentation for JSON documents
-const JSON_INDENT = 2;
 
 /**
  * Bootstrap of the NestJS application
@@ -53,7 +50,7 @@ export const bootstrap = async (mode: ApplicationMode): Promise<INestApplication
     }
     case ApplicationMode.SWAGGER: {
       await application.init();
-      fs.writeFileSync('openapi.json', JSON.stringify(document, undefined, JSON_INDENT));
+      fs.writeFileSync('openapi.json', JSON.stringify(document, undefined, constants.JSON_INDENTATION));
       break;
     }
     default: {

@@ -1,3 +1,4 @@
+export * from './constants/constants';
 export * from './exceptions/dto/exception.dto';
 export * from './exceptions/filters/application-exception.filter';
 export * from './health/health.module';
