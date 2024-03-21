@@ -7,7 +7,7 @@ import { configuration } from './configurations/configuration';
 import { ConfigurationOptions } from './configurations/configuration.interface';
 
 /**
- * Selection of modules to start in the application
+ * Modules and providers to start in the application
  */
 @Module({
   imports: [

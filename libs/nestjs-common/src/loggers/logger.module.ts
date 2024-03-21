@@ -1,5 +1,5 @@
 import { Global, Module } from '@nestjs/common';
-import { ConfigurableModuleClass as ConfigurableLoggerModule } from './logger-module.definition';
+import { ConfigurableModuleClass } from './logger-module.definition';
 import { ApplicationLogger } from './services/application.logger';
 
 /**
@@ -10,4 +10,4 @@ import { ApplicationLogger } from './services/application.logger';
   providers: [ApplicationLogger],
   exports: [ApplicationLogger],
 })
-export class LoggerModule extends ConfigurableLoggerModule {}
+export class LoggerModule extends ConfigurableModuleClass {}

@@ -1,16 +1,8 @@
-import { ConfigurableModuleBuilder, LogLevel } from '@nestjs/common';
-import { LogFormat } from './models/log-format';
+import { ConfigurableModuleBuilder } from '@nestjs/common';
+import { LoggerModuleOptions } from './logger-module.options';
 
 /**
- * Expected options for the logger module
- */
-export interface LoggerModuleOptions {
-  logLevels?: LogLevel[];
-  logFormat?: LogFormat;
-}
-
-/**
- * Logger module builder
+ * Builder for the dynamic Logger module
  * See: https://docs.nestjs.com/fundamentals/dynamic-modules#configurable-module-builder
  */
 export const { ConfigurableModuleClass, MODULE_OPTIONS_TOKEN } = new ConfigurableModuleBuilder<LoggerModuleOptions>().build();

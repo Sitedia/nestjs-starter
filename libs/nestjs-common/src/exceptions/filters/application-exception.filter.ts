@@ -1,8 +1,7 @@
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus } from '@nestjs/common';
 import { Request, Response } from 'express';
+import { constants } from '../../constants/constants';
 import { ExceptionDTO } from '../dto/exception.dto';
-
-export const INTERNAL_SERVER_ERROR_MESSAGE = 'An internal server error occurred';
 
 /**
  * This filter always return the same error payload to the user.
@@ -17,7 +16,7 @@ export class ApplicationExceptionFilter implements ExceptionFilter {
     const status = exception.getStatus();
 
     // We should return the exception message only for client exceptions
-    const message = exception.getStatus() < HttpStatus.INTERNAL_SERVER_ERROR ? exception.message : INTERNAL_SERVER_ERROR_MESSAGE;
+    const message = exception.getStatus() < HttpStatus.INTERNAL_SERVER_ERROR ? exception.message : constants.INTERNAL_SERVER_ERROR_MESSAGE;
 
     // Payload to return in the HTTP response
     const payload: ExceptionDTO = {

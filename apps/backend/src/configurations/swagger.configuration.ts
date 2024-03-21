@@ -2,8 +2,6 @@ import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
 import { ApplicationOptions } from './configuration.interface';
 
-const TAGS = ['health'];
-
 /**
  * Generates the OpenAPI specification and configures Swagger
  */
@@ -21,7 +19,8 @@ export const configureSwagger = (application: INestApplication, applicationOptio
     .addServer(applicationUrl);
 
   // Add tags
-  for (const tag of TAGS) {
+  const tags = ['health'];
+  for (const tag of tags) {
     documentBuilder.addTag(tag);
   }
 

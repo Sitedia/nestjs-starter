@@ -18,7 +18,7 @@ export class RequestInterceptor implements NestInterceptor {
     const clientRequest = `${request.method} ${request.url}`;
     this.logger.debug(clientRequest, RequestInterceptor.name);
 
-    // Handle and log response status
+    // Intercept and log errors
     return next.handle().pipe(
       catchError((error) => {
         const status = error instanceof HttpException ? error.getStatus() : HttpStatus.INTERNAL_SERVER_ERROR;
