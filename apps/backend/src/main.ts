@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/prefer-module */
 /* eslint-disable jest/require-hook */
 import { ApplicationLogger, constants } from '@company/nestjs-common';
 import { INestApplication } from '@nestjs/common';
@@ -50,7 +51,7 @@ export const bootstrap = async (mode: ApplicationMode): Promise<INestApplication
     }
     case ApplicationMode.SWAGGER: {
       await application.init();
-      fs.writeFileSync('openapi.json', JSON.stringify(document, undefined, constants.JSON_INDENTATION));
+      fs.writeFileSync(__dirname + '/openapi.json', JSON.stringify(document, undefined, constants.JSON_INDENTATION));
       break;
     }
     default: {

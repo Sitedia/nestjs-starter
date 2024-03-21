@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/prefer-module */
 import { LogFormat } from '@company/nestjs-common';
 import { HttpStatus } from '@nestjs/common';
 import * as fs from 'node:fs';
@@ -59,7 +60,6 @@ describe('nestjs application', () => {
     process.env.APP_LOG_FORMAT = LogFormat.CONSOLE;
     const application = await bootstrap(ApplicationMode.SWAGGER);
     await application.close();
-
-    expect(fs.existsSync('openapi.json')).toBe(true);
+    expect(fs.existsSync(__dirname + '/../src/openapi.json')).toBe(true);
   });
 });
