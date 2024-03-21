@@ -3,8 +3,7 @@ import { ConfigurableModuleClass as ConfigurableLoggerModule } from './logger-mo
 import { ApplicationLogger } from './services/application.logger';
 
 /**
- * Dynamic module for the logger
- * See: https://docs.nestjs.com/fundamentals/dynamic-modules#configurable-module-builder
+ * Logger module
  */
 @Global()
 @Module({

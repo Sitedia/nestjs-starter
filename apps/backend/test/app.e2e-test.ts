@@ -3,7 +3,7 @@ import { HttpStatus } from '@nestjs/common';
 import * as fs from 'node:fs';
 import * as request from 'supertest';
 import { bootstrap } from '../src/main';
-import { ApplicationMode } from '../src/models/application-mode';
+import { ApplicationMode } from '../src/models/application-model.enum';
 
 describe('nestjs application', () => {
   it('should display the status of the application', async () => {
@@ -32,6 +32,7 @@ describe('nestjs application', () => {
     const application = await bootstrap(ApplicationMode.TEST);
     const httpServer = application.getHttpServer();
     const response = await request(httpServer).get('/api/health');
+
     expect(response.statusCode).toBe(HttpStatus.OK);
     expect(response.body.status).toBe('ok');
   });
@@ -58,6 +59,7 @@ describe('nestjs application', () => {
     process.env.APP_LOG_FORMAT = LogFormat.CONSOLE;
     const application = await bootstrap(ApplicationMode.SWAGGER);
     await application.close();
+
     expect(fs.existsSync('openapi.json')).toBe(true);
   });
 });

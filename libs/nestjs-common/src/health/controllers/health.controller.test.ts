@@ -19,6 +19,7 @@ describe('health endpoint', () => {
     expect.assertions(1);
     const healthController = await setup();
     const healthCheckStatus = await healthController.check();
+
     expect(healthCheckStatus.status).toBe('ok');
   });
 });

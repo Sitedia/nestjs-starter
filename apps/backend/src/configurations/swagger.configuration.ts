@@ -5,7 +5,7 @@ import { ApplicationOptions } from './configuration.interface';
 const TAGS = ['health'];
 
 /**
- * Generates the OpenAPI specification for the application
+ * Generates the OpenAPI specification and configures Swagger
  */
 export const configureSwagger = (application: INestApplication, applicationOptions: ApplicationOptions, applicationUrl: string): OpenAPIObject | undefined => {
   // Check if Swagger UI should be enabled

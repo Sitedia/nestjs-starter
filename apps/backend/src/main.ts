@@ -8,8 +8,14 @@ import { AppModule } from './app.module';
 import { ApplicationOptions, ConfigurationOptions } from './configurations/configuration.interface';
 import { secureEntrypoint } from './configurations/entrypoint.configuration';
 import { configureSwagger } from './configurations/swagger.configuration';
-import { ApplicationMode } from './models/application-mode';
+import { ApplicationMode } from './models/application-model.enum';
 
+// Indentation for JSON documents
+const JSON_INDENT = 2;
+
+/**
+ * Bootstrap of the NestJS application
+ */
 export const bootstrap = async (mode: ApplicationMode): Promise<INestApplication> => {
   // Configure HTTPs
   const enableHTTPs = process.env['APP_TLS_ENABLED'] === 'true';
@@ -18,7 +24,7 @@ export const bootstrap = async (mode: ApplicationMode): Promise<INestApplication
     key: process.env['APP_TLS_KEY']?.replaceAll('\\n', '\n'),
   };
 
-  // Init the application
+  // Create the NestJS application
   const application = await NestFactory.create(AppModule, {
     bufferLogs: true, // buffer the first logs until out custom logger is set (see below)
     httpsOptions: enableHTTPs ? httpsOptions : undefined,
@@ -47,17 +53,18 @@ export const bootstrap = async (mode: ApplicationMode): Promise<INestApplication
     }
     case ApplicationMode.SWAGGER: {
       await application.init();
-      const INDENT = 2;
-      fs.writeFileSync('openapi.json', JSON.stringify(document, undefined, INDENT));
+      fs.writeFileSync('openapi.json', JSON.stringify(document, undefined, JSON_INDENT));
       break;
     }
     default: {
       await application.listen(applicationOptions.port);
       applicationlogger.log(`>>> Application is listening on ${applicationUrl}/${applicationOptions.basePath}`, 'Main');
+      break;
     }
   }
 
   return application;
 };
 
+// Launch the application
 bootstrap(process.env.APP_MODE as ApplicationMode);

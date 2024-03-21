@@ -2,7 +2,7 @@ import { ConfigurableModuleBuilder, LogLevel } from '@nestjs/common';
 import { LogFormat } from './models/log-format';
 
 /**
- * Expected configuration for the logger module
+ * Expected options for the logger module
  */
 export interface LoggerModuleOptions {
   logLevels?: LogLevel[];
