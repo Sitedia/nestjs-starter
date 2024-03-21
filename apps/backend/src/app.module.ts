@@ -4,7 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { configuration } from './configurations/configuration';
-import { ConfigurationTopic, LoggerConfiguration } from './configurations/configuration.interface';
+import { ConfigurationTopic } from './configurations/configuration.interface';
 
 /**
  * Content of the application.
@@ -15,21 +15,11 @@ import { ConfigurationTopic, LoggerConfiguration } from './configurations/config
     ConfigModule.forRoot({ isGlobal: true, load: [configuration] }),
     HealthModule,
     ThrottlerModule.forRootAsync({
-      useFactory: (configService: ConfigService) => {
-        const rateLimitConfiguration = configService.get(ConfigurationTopic.RATE_LIMIT);
-        return [{ ttl: rateLimitConfiguration.ttl, limit: rateLimitConfiguration.limit }];
-      },
+      useFactory: (configService: ConfigService) => configService.get(ConfigurationTopic.RATE_LIMIT),
       inject: [ConfigService],
     }),
     LoggerModule.registerAsync({
-      useFactory: (configService: ConfigService) => {
-        const loggerConfiguration = configService.get<LoggerConfiguration>(ConfigurationTopic.LOGGER);
-        return {
-          logLevels: loggerConfiguration.levels,
-          logFormat: loggerConfiguration.format,
-          correlationIdField: loggerConfiguration.correlationIdField,
-        };
-      },
+      useFactory: (configService: ConfigService) => configService.get(ConfigurationTopic.LOGGER),
       inject: [ConfigService],
     }),
   ],

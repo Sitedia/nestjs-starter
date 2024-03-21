@@ -21,12 +21,13 @@ export const configuration = (): Configuration => ({
     swaggerUIEnabled: process.env.APP_SWAGGER_UI_ENABLED === 'true',
   },
   logger: {
-    levels: process.env.APP_LOG_LEVELS?.split(',').map((format) => format.trim() as LogLevel),
-    format: process.env.APP_LOG_FORMAT === 'JSON' ? LogFormat.JSON : LogFormat.CONSOLE,
-    correlationIdField: 'correlationId',
+    logLevels: process.env.APP_LOG_LEVELS?.split(',').map((format) => format.trim() as LogLevel),
+    logFormat: process.env.APP_LOG_FORMAT === 'JSON' ? LogFormat.JSON : LogFormat.CONSOLE,
   },
-  rateLimit: {
-    ttl: process.env.APP_RATE_LIMIT_TTL ? Number.parseInt(process.env.APP_RATE_LIMIT_TTL, 10) : DEFAULT_RATE_LIMIT_TTL,
-    limit: process.env.APP_RATE_LIMIT_LIMIT ? Number.parseInt(process.env.APP_RATE_LIMIT_LIMIT, 10) : DEFAULT_RATE_LIMIT_LIMIT,
-  },
+  rateLimit: [
+    {
+      ttl: process.env.APP_RATE_LIMIT_TTL ? Number.parseInt(process.env.APP_RATE_LIMIT_TTL, 10) : DEFAULT_RATE_LIMIT_TTL,
+      limit: process.env.APP_RATE_LIMIT_LIMIT ? Number.parseInt(process.env.APP_RATE_LIMIT_LIMIT, 10) : DEFAULT_RATE_LIMIT_LIMIT,
+    },
+  ],
 });

@@ -1,5 +1,5 @@
-import { LogFormat } from '@company/nestjs-common';
-import { LogLevel } from '@nestjs/common';
+import { LoggerModuleOptions } from '@company/nestjs-common';
+import { ThrottlerModuleOptions } from '@nestjs/throttler';
 
 /**
  * Topics of the configuration
@@ -24,27 +24,10 @@ export interface ApplicationConfiguration {
 }
 
 /**
- * Structure of the logger configuration
- */
-export interface LoggerConfiguration {
-  levels: LogLevel[];
-  format: LogFormat;
-  correlationIdField: string;
-}
-
-/**
- * Structure of the rate limite configuration
- */
-export interface RateLimitConfiguration {
-  ttl: number;
-  limit: number;
-}
-
-/**
  * Final structure of the whole configuration
  */
 export interface Configuration {
   application: ApplicationConfiguration;
-  logger: LoggerConfiguration;
-  rateLimit: RateLimitConfiguration;
+  logger: LoggerModuleOptions;
+  rateLimit: ThrottlerModuleOptions;
 }
