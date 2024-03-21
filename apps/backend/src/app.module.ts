@@ -1,9 +1,10 @@
-import { ApplicationExceptionFilter, HealthModule, LoggerModule, RateLimitModule, RequestInterceptor } from '@company/nestjs-common';
+import { ApplicationExceptionFilter, HealthModule, LoggerModule, RequestInterceptor } from '@company/nestjs-common';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { configuration } from './configurations/configuration';
-import { ConfigurationTopic, LoggerConfiguration, RateLimitConfiguration } from './configurations/configuration.interface';
+import { ConfigurationTopic, LoggerConfiguration } from './configurations/configuration.interface';
 
 /**
  * Content of the application.
@@ -13,13 +14,10 @@ import { ConfigurationTopic, LoggerConfiguration, RateLimitConfiguration } from 
   imports: [
     ConfigModule.forRoot({ isGlobal: true, load: [configuration] }),
     HealthModule,
-    RateLimitModule.registerAsync({
+    ThrottlerModule.forRootAsync({
       useFactory: (configService: ConfigService) => {
-        const rateLimitConfiguration = configService.get<RateLimitConfiguration>(ConfigurationTopic.RATE_LIMIT);
-        return {
-          ttl: rateLimitConfiguration.ttl,
-          limit: rateLimitConfiguration.limit,
-        };
+        const rateLimitConfiguration = configService.get(ConfigurationTopic.RATE_LIMIT);
+        return [{ ttl: rateLimitConfiguration.ttl, limit: rateLimitConfiguration.limit }];
       },
       inject: [ConfigService],
     }),
@@ -36,6 +34,10 @@ import { ConfigurationTopic, LoggerConfiguration, RateLimitConfiguration } from 
     }),
   ],
   providers: [
+    {
+      provide: APP_GUARD, // apply the rate limit on each endpoint
+      useClass: ThrottlerGuard,
+    },
     {
       provide: APP_INTERCEPTOR, // see: https://docs.nestjs.com/interceptors#binding-interceptors
       useClass: RequestInterceptor,

@@ -6,4 +6,3 @@ export * from './loggers/logger-module.definition';
 export * from './loggers/logger.module';
 export * from './loggers/models/log-format';
 export * from './loggers/services/application.logger';
-export * from './rate-limit/rate-limit.module';
