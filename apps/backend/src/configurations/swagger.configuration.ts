@@ -25,10 +25,11 @@ export const configureSwagger = (application: INestApplication, applicationOptio
     documentBuilder.addTag(tag);
   }
 
-  // Generate the configuration
+  // Generate the OpenAPI specification
   const config = documentBuilder.build();
-
   const document = SwaggerModule.createDocument(application, config);
+
+  // Set up Swagger
   SwaggerModule.setup(applicationOptions.basePath, application, document, {
     jsonDocumentUrl: '/api/openapi-docs',
   });
