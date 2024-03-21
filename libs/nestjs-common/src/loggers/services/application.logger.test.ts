@@ -7,7 +7,7 @@ import { Test, TestingModule } from '@nestjs/testing';
  */
 const setup = async (logFormat?: LogFormat, logLevels?: LogLevel[]) => {
   const testingModule: TestingModule = await Test.createTestingModule({
-    imports: [LoggerModule.register({ global: true, logFormat, logLevels })],
+    imports: [LoggerModule.register({ logFormat, logLevels })],
   }).compile();
 
   return testingModule.get(ApplicationLogger);

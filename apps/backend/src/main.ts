@@ -5,7 +5,7 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import * as fs from 'node:fs';
 import { AppModule } from './app.module';
-import { ApplicationConfiguration, ConfigurationTopic } from './configurations/configuration.interface';
+import { ApplicationOptions, ConfigurationOptions } from './configurations/configuration.interface';
 import { secureEntrypoint } from './configurations/entrypoint.configuration';
 import { configureSwagger } from './configurations/swagger.configuration';
 import { ApplicationMode } from './models/application-mode';
@@ -30,14 +30,14 @@ export const bootstrap = async (mode: ApplicationMode): Promise<INestApplication
 
   // Load the configuration
   const configService = application.get(ConfigService);
-  const applicationConfiguration = configService.get<ApplicationConfiguration>(ConfigurationTopic.APPLICATION);
+  const applicationOptions = configService.get<ApplicationOptions>(ConfigurationOptions.APPLICATION);
 
   // Secure the entry point
-  secureEntrypoint(application, applicationConfiguration);
+  secureEntrypoint(application, applicationOptions);
 
   // Configure Swagger
-  const applicationUrl = `${enableHTTPs ? 'https' : 'http'}://localhost:${applicationConfiguration.port}`;
-  const document = configureSwagger(application, applicationConfiguration, applicationUrl);
+  const applicationUrl = `${enableHTTPs ? 'https' : 'http'}://localhost:${applicationOptions.port}`;
+  const document = configureSwagger(application, applicationOptions, applicationUrl);
 
   // Start the application in the requested mode
   switch (mode) {
@@ -52,8 +52,8 @@ export const bootstrap = async (mode: ApplicationMode): Promise<INestApplication
       break;
     }
     default: {
-      await application.listen(applicationConfiguration.port);
-      applicationlogger.log(`>>> Application is listening on ${applicationUrl}/${applicationConfiguration.basePath}`, 'Main');
+      await application.listen(applicationOptions.port);
+      applicationlogger.log(`>>> Application is listening on ${applicationUrl}/${applicationOptions.basePath}`, 'Main');
     }
   }
 

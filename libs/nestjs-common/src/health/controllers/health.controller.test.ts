@@ -8,7 +8,7 @@ import { HealthController } from './health.controller';
  */
 const setup = async () => {
   const app: TestingModule = await Test.createTestingModule({
-    imports: [HealthModule, LoggerModule.register({ global: true })],
+    imports: [HealthModule, LoggerModule.register({})],
   }).compile();
 
   return app.get(HealthController);

@@ -1,23 +1,35 @@
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
-import { ApplicationConfiguration } from './configuration.interface';
+import { ApplicationOptions } from './configuration.interface';
 
-export const configureSwagger = (application: INestApplication, applicationConfiguration: ApplicationConfiguration, applicationUrl: string): OpenAPIObject | undefined => {
-  // Check if Swagger UI should enabled
-  if (!applicationConfiguration.swaggerUIEnabled) {
+const TAGS = ['health'];
+
+/**
+ * Generates the OpenAPI specification for the application
+ */
+export const configureSwagger = (application: INestApplication, applicationOptions: ApplicationOptions, applicationUrl: string): OpenAPIObject | undefined => {
+  // Check if Swagger UI should be enabled
+  if (!applicationOptions.swaggerUIEnabled) {
     return undefined;
   }
 
-  const config = new DocumentBuilder()
-    .setTitle(applicationConfiguration.name)
-    .setDescription(applicationConfiguration.description)
-    .setVersion(applicationConfiguration.version)
-    .addTag('health')
-    .addServer(applicationUrl)
-    .build();
+  // Prepare the configuration
+  const documentBuilder = new DocumentBuilder()
+    .setTitle(applicationOptions.name)
+    .setDescription(applicationOptions.description)
+    .setVersion(applicationOptions.version)
+    .addServer(applicationUrl);
+
+  // Add tags
+  for (const tag of TAGS) {
+    documentBuilder.addTag(tag);
+  }
+
+  // Generate the configuration
+  const config = documentBuilder.build();
 
   const document = SwaggerModule.createDocument(application, config);
-  SwaggerModule.setup(applicationConfiguration.basePath, application, document, {
+  SwaggerModule.setup(applicationOptions.basePath, application, document, {
     jsonDocumentUrl: '/api/openapi-docs',
   });
 

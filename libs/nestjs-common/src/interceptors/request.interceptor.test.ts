@@ -21,47 +21,39 @@ describe('request interceptor', () => {
   it('should intercept the requests', async () => {
     expect.assertions(1);
     const requestInterceptor = await setup();
-
-    // Mock the handler
     const handlerMock = { handle: () => of({ username: 'admin' }) };
-
     const observable = requestInterceptor.intercept(contextMock as ExecutionContext, handlerMock);
     const result = await lastValueFrom(observable);
+
     expect(result.username).toBe('admin');
   });
 
   it('should warn if the response delay is too long', async () => {
     expect.assertions(1);
     const requestInterceptor = await setup();
-
-    // Mock the handler
     const delayMs = 1500;
     const handlerMock = { handle: () => of({ username: 'admin' }).pipe(delay(delayMs)) };
-
     const observable = requestInterceptor.intercept(contextMock as ExecutionContext, handlerMock);
     const result = await lastValueFrom(observable);
+
     expect(result.username).toBe('admin');
   });
 
   it('should log client errors', async () => {
     expect.assertions(1);
     const requestInterceptor = await setup();
-
-    // Mock the handler
     const handlerMock = { handle: () => throwError(() => new ForbiddenException('My error')) };
-
     const observable = requestInterceptor.intercept(contextMock as ExecutionContext, handlerMock);
+
     await expect(lastValueFrom(observable)).rejects.toThrow('My error');
   });
 
   it('should log the internal server errors', async () => {
     expect.assertions(1);
     const requestInterceptor = await setup();
-
-    // Mock the handler
     const handlerMock = { handle: () => throwError(() => new Error('Internal error')) };
-
     const observable = requestInterceptor.intercept(contextMock as ExecutionContext, handlerMock);
+
     await expect(lastValueFrom(observable)).rejects.toThrow('Internal error');
   });
 });

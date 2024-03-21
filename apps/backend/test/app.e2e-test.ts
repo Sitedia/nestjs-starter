@@ -9,6 +9,8 @@ describe('nestjs application', () => {
   it('should display the status of the application', async () => {
     expect.assertions(2);
     delete process.env.PORT;
+    delete process.env.APP_RATE_LIMIT_TTL;
+    delete process.env.APP_RATE_LIMIT_LIMIT;
     process.env.APP_TLS_ENABLED = 'false';
     process.env.APP_SWAGGER_UI_ENABLED = 'true';
     process.env.APP_LOG_FORMAT = 'CONSOLE';
@@ -40,6 +42,8 @@ describe('nestjs application', () => {
     process.env.APP_TLS_ENABLED = 'true';
     process.env.APP_SWAGGER_UI_ENABLED = 'false';
     process.env.APP_LOG_FORMAT = 'JSON';
+    process.env.APP_RATE_LIMIT_TTL = '1000';
+    process.env.APP_RATE_LIMIT_LIMIT = '1000';
     const application = await bootstrap(ApplicationMode.SERVER);
     const httpServer = application.getHttpServer();
 

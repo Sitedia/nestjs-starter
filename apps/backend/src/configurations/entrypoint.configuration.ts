@@ -1,11 +1,11 @@
 import { INestApplication } from '@nestjs/common';
 import helmet from 'helmet';
-import { ApplicationConfiguration } from './configuration.interface';
+import { ApplicationOptions } from './configuration.interface';
 
-export const secureEntrypoint = (application: INestApplication, applicationConfiguration: ApplicationConfiguration) => {
-  application.setGlobalPrefix(applicationConfiguration.basePath);
+export const secureEntrypoint = (application: INestApplication, applicationOptions: ApplicationOptions) => {
+  application.setGlobalPrefix(applicationOptions.basePath);
   application.use(helmet());
-  application.enableCors({ origin: applicationConfiguration.origin });
+  application.enableCors({ origin: applicationOptions.origin });
   application.enableVersioning();
 
   return this;

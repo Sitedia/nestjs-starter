@@ -4,7 +4,7 @@ import { ThrottlerModuleOptions } from '@nestjs/throttler';
 /**
  * Topics of the configuration
  */
-export enum ConfigurationTopic {
+export enum ConfigurationOptions {
   APPLICATION = 'application',
   LOGGER = 'logger',
   RATE_LIMIT = 'rateLimit',
@@ -27,7 +27,7 @@ export interface ApplicationOptions {
  * Final structure of the whole configuration
  */
 export interface Configuration {
-  [ConfigurationTopic.APPLICATION]: ApplicationOptions;
-  [ConfigurationTopic.LOGGER]: LoggerModuleOptions;
-  [ConfigurationTopic.RATE_LIMIT]: ThrottlerModuleOptions;
+  [ConfigurationOptions.APPLICATION]: ApplicationOptions;
+  [ConfigurationOptions.LOGGER]: LoggerModuleOptions;
+  [ConfigurationOptions.RATE_LIMIT]: ThrottlerModuleOptions;
 }
