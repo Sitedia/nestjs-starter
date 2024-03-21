@@ -13,7 +13,7 @@ export enum ConfigurationTopic {
 /**
  * Structure of the application configuration
  */
-export interface ApplicationConfiguration {
+export interface ApplicationOptions {
   name: string;
   description?: string;
   version: string;
@@ -27,7 +27,7 @@ export interface ApplicationConfiguration {
  * Final structure of the whole configuration
  */
 export interface Configuration {
-  application: ApplicationConfiguration;
-  logger: LoggerModuleOptions;
-  rateLimit: ThrottlerModuleOptions;
+  [ConfigurationTopic.APPLICATION]: ApplicationOptions;
+  [ConfigurationTopic.LOGGER]: LoggerModuleOptions;
+  [ConfigurationTopic.RATE_LIMIT]: ThrottlerModuleOptions;
 }

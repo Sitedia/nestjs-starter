@@ -8,7 +8,7 @@ import { ConfigurationTopic } from './configurations/configuration.interface';
 
 /**
  * Content of the application.
- * In this design, a NestJS application is simply a group of NestJS modules.
+ * In this design, a NestJS application is simply an aggregate of NestJS modules.
  */
 @Module({
   imports: [
