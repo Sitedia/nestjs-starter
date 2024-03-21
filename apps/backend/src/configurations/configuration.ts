@@ -7,8 +7,7 @@ const DEFAULT_RATE_LIMIT_TTL = 1000;
 const DEFAULT_RATE_LIMIT_LIMIT = 100;
 
 /**
- * Configuration in Typescript format to be easily used in the source code.
- * The settings are loaded from environment variables.
+ * Configuration in Typescript to be easily used in the source code.
  */
 export const configuration = (): Configuration => ({
   application: {

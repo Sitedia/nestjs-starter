@@ -2,7 +2,7 @@ import { LoggerModuleOptions } from '@company/nestjs-common';
 import { ThrottlerModuleOptions } from '@nestjs/throttler';
 
 /**
- * Topics of the configuration
+ * Main parts of the configuration
  */
 export enum ConfigurationOptions {
   APPLICATION = 'application',
