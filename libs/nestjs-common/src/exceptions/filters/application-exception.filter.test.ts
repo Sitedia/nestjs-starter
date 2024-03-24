@@ -1,6 +1,7 @@
 import { ArgumentsHost, ForbiddenException, HttpStatus, InternalServerErrorException } from '@nestjs/common';
+import { constants } from '../../constants/constants';
 import { ExceptionDTO } from '../dto/exception.dto';
-import { ApplicationExceptionFilter, INTERNAL_SERVER_ERROR_MESSAGE } from './application-exception.filter';
+import { ApplicationExceptionFilter } from './application-exception.filter';
 
 describe('exception filter', () => {
   it('should return a client exception with the message', async () => {
@@ -58,6 +59,6 @@ describe('exception filter', () => {
     applicationExceptionFilter.catch(new InternalServerErrorException('My internal error'), hostMock as ArgumentsHost);
 
     expect(responseStatus).toBe(HttpStatus.INTERNAL_SERVER_ERROR);
-    expect(result.message).toBe(INTERNAL_SERVER_ERROR_MESSAGE);
+    expect(result.message).toBe(constants.INTERNAL_SERVER_ERROR_MESSAGE);
   });
 });

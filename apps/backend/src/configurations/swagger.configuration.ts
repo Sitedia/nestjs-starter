@@ -23,7 +23,7 @@ export const configureSwagger = (
     .addServer(applicationUrl);
 
   // Add tags
-  const tags = ['health'];
+  const tags = [];
   for (const tag of tags) {
     documentBuilder.addTag(tag);
   }

@@ -1,4 +1,4 @@
-import { ApplicationExceptionFilter, HealthModule, LoggerModule, RequestInterceptor } from '@company/nestjs-common';
+import { ApplicationExceptionFilter, LoggerModule, RequestInterceptor } from '@company/nestjs-common';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
@@ -20,7 +20,6 @@ import { ConfigurationOptions } from './configurations/configuration.interface';
       useFactory: (configService: ConfigService) => configService.get(ConfigurationOptions.LOGGER),
       inject: [ConfigService],
     }),
-    HealthModule,
   ],
   providers: [
     {
