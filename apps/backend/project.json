@@ -34,7 +34,10 @@
     "lint:api": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["nest start", "spectral lint ./dist/apps/backend/src/openapi.json --ruleset ../../spectral.yml --fail-on-unmatched-globs"],
+        "commands": [
+          "nest start",
+          "spectral lint ./dist/apps/backend/src/openapi.json --ruleset ../../spectral.yml --fail-on-unmatched-globs"
+        ],
         "cwd": "apps/backend",
         "envFile": "apps/backend/.env.swagger",
         "parallel": false

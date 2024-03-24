@@ -1,6 +1,12 @@
 module.exports = {
   root: true,
-  extends: ['eslint:recommended', 'plugin:@typescript-eslint/strict', 'plugin:jest/all', 'plugin:unicorn/all', 'plugin:prettier/recommended'],
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/strict',
+    'plugin:jest/all',
+    'plugin:unicorn/all',
+    'plugin:prettier/recommended',
+  ],
   ignorePatterns: ['coverage/*', 'dist/*', '.eslintrc.js', 'prettier.config.js', 'jest.config.js', 'dotenv.config.js'],
   settings: { 'import/resolver': { typescript: true, node: true } },
   rules: {
@@ -24,7 +30,7 @@ module.exports = {
     {
       files: ['*.ts'],
       extends: ['plugin:@typescript-eslint/strict', 'plugin:import/recommended'],
-      parserOptions: { project: './tsconfig.json' }, // looks for tsconfig.json the folder from which the linter is executed
+      parserOptions: { project: './tsconfig.json' },
     },
     {
       files: ['*.test.ts', '*.e2e-test.ts'],

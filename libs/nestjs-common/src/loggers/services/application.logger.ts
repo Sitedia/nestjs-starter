@@ -1,5 +1,6 @@
 import { ConsoleLogger, Inject, Injectable, LogLevel } from '@nestjs/common';
-import { LoggerModuleOptions, MODULE_OPTIONS_TOKEN } from '../logger-module.definition';
+import { MODULE_OPTIONS_TOKEN } from '../logger-module.definition';
+import { LoggerModuleOptions } from '../logger-module.options';
 import { LogFormat } from '../models/log-format';
 
 /**
@@ -40,7 +41,14 @@ export class ApplicationLogger extends ConsoleLogger {
     return super.formatContext(context.padEnd(contextLength, ' ').slice(0, contextLength));
   }
 
-  formatMessage(logLevel: LogLevel, message: unknown, pidMessage: string, formattedLogLevel: string, contextMessage: string, timestampDiff: string): string {
+  formatMessage(
+    logLevel: LogLevel,
+    message: unknown,
+    pidMessage: string,
+    formattedLogLevel: string,
+    contextMessage: string,
+    timestampDiff: string,
+  ): string {
     const output = this.stringifyMessage(message, logLevel);
     const level = this.colorize(formattedLogLevel, logLevel);
     const timestamp = new Date().toISOString();

@@ -5,7 +5,11 @@ import { ApplicationOptions } from './configuration.interface';
 /**
  * Generates the OpenAPI specification and configures Swagger
  */
-export const configureSwagger = (application: INestApplication, applicationOptions: ApplicationOptions, applicationUrl: string): OpenAPIObject | undefined => {
+export const configureSwagger = (
+  application: INestApplication,
+  applicationOptions: ApplicationOptions,
+  applicationUrl: string,
+): OpenAPIObject | undefined => {
   // Check if Swagger UI should be enabled
   if (!applicationOptions.swaggerUIEnabled) {
     return undefined;

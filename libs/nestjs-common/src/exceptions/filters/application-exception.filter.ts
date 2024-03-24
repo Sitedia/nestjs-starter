@@ -16,7 +16,10 @@ export class ApplicationExceptionFilter implements ExceptionFilter {
     const status = exception.getStatus();
 
     // We should return the exception message only for client exceptions
-    const message = exception.getStatus() < HttpStatus.INTERNAL_SERVER_ERROR ? exception.message : constants.INTERNAL_SERVER_ERROR_MESSAGE;
+    const message =
+      exception.getStatus() < HttpStatus.INTERNAL_SERVER_ERROR
+        ? exception.message
+        : constants.INTERNAL_SERVER_ERROR_MESSAGE;
 
     // Payload to return in the HTTP response
     const payload: ExceptionDTO = {

@@ -25,8 +25,12 @@ export const configuration = (): Configuration => ({
   },
   rateLimit: [
     {
-      ttl: process.env.APP_RATE_LIMIT_TTL ? Number.parseInt(process.env.APP_RATE_LIMIT_TTL, 10) : DEFAULT_RATE_LIMIT_TTL,
-      limit: process.env.APP_RATE_LIMIT_LIMIT ? Number.parseInt(process.env.APP_RATE_LIMIT_LIMIT, 10) : DEFAULT_RATE_LIMIT_LIMIT,
+      ttl: process.env.APP_RATE_LIMIT_TTL
+        ? Number.parseInt(process.env.APP_RATE_LIMIT_TTL, 10)
+        : DEFAULT_RATE_LIMIT_TTL,
+      limit: process.env.APP_RATE_LIMIT_LIMIT
+        ? Number.parseInt(process.env.APP_RATE_LIMIT_LIMIT, 10)
+        : DEFAULT_RATE_LIMIT_LIMIT,
     },
   ],
 });
