@@ -1,7 +1,7 @@
-import { ApplicationExceptionFilter, LoggerModule, RequestInterceptor } from '@company/nestjs-common';
+import { LoggerModule, RequestInterceptor } from '@company/nestjs-common';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { configuration } from './configurations/configuration';
 import { ConfigurationOptions } from './configurations/configuration.interface';
@@ -29,10 +29,6 @@ import { ConfigurationOptions } from './configurations/configuration.interface';
     {
       provide: APP_INTERCEPTOR, // see: https://docs.nestjs.com/interceptors#binding-interceptors
       useClass: RequestInterceptor,
-    },
-    {
-      provide: APP_FILTER, // see https://docs.nestjs.com/exception-filters#binding-filters
-      useClass: ApplicationExceptionFilter,
     },
   ],
 })
