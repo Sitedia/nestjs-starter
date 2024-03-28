@@ -4,6 +4,11 @@
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "vscode-icons-team.vscode-icons",
-    "orta.vscode-jest"
+    "orta.vscode-jest",
+    "jayfong.generate-index",
+    "mhutchie.git-graph",
+    "yzhang.markdown-all-in-one",
+    "nrwl.angular-console",
+    "snyk-security.snyk-vulnerability-scanner"
   ]
 }
